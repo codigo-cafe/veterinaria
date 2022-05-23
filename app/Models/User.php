@@ -23,10 +23,23 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+    public $timestamps = false;
+    public $table = "personal";
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'cedula_per',
+        'nom_per',
+        'ape_per',
+        'dir_per',
+        'celular_per',
+        'correo_per',
+        'contrasena_per',
+        'sexo_per',
+        'edad_per',
+        'fecnac_per',
+        'fecinicio_per',
+        'fecfinal_per',
+        'cargo_per',
+        'profe_per',
     ];
 
     /**
@@ -35,19 +48,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'contrasena_per',
         'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -58,4 +60,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected function defaultProfilePhotoUrl()
+    {
+        $nombre = $this->nom_per[0];
+        $apellido =  $this->ape_per[0];
+        return 'https://ui-avatars.com/api/?name=' . urlencode($nombre . ' ' . $apellido) . '&color=7F9CF5&background=EBF4FF';
+    }
+
+    public function setContrasenaPerAttribute($contrasena_per)
+    {
+        $this->attributes['contrasena_per'] = bcrypt($contrasena_per);
+    }
 }

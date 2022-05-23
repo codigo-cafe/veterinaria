@@ -11,9 +11,12 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="/css/material-dashboard.css">
-        <!-- Nucleo Icons -->
-        <link href="/css/nucleo-icons.css" rel="stylesheet" />
-        <link href="/css/nucleo-svg.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/css/btn-oxford.css">
+        <link rel="stylesheet" href="/css/btn-blue.css">
+        <link rel="stylesheet" href="/css/btn-glaucous.css">
+        <link rel="stylesheet" href="/css/btn-crayola.css">
+        <link rel="stylesheet" href="/css/btn-cultured.css">
+        <link rel="stylesheet" href="/css/datatable.css">
         <!-- Font Awesome Icons -->
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
         <!-- Material Icons -->
@@ -31,6 +34,7 @@
         <script src="/js/core/bootstrap.min.js"></script>
         <script src="/js/plugins/perfect-scrollbar.min.js"></script>
         <script src="/js/plugins/smooth-scrollbar.min.js"></script>
+        <script src="/js/plugins/datatables.js"></script>
         <script>
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -3,9 +3,9 @@
 
     <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3  navbar-transparent ">
         <div class="container">
-            <a class="navbar-brand  text-white " href="https://demos.creative-tim.com/material-kit/presentation" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
+            <Link class="navbar-brand text-white" :href="route('home')" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
                 Veterinaria
-            </a>
+            </Link>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon mt-2">
                     <span class="navbar-toggler-bar bar1"></span>
@@ -21,53 +21,54 @@
                             Inicio
                         </Link>
                     </li>
-                    <li class="nav-item my-auto ms-3 ms-lg-0">
-                        <Link :href="route('home')" class="btn btn-sm bg-gradient-primary mb-0 me-1 mt-2 mt-md-0">Inicio</Link>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80');" loading="lazy">
+    <div class="page-header align-items-start min-vh-100" style="background-image: url('/img/login2.jpg');" loading="lazy">
         <span class="mask bg-gradient-dark opacity-6"></span>
         <div class="container my-auto">
             <div class="row">
                 <div class="col-lg-4 col-md-8 col-12 mx-auto">
                     <div class="card z-index-0 fadeIn3 fadeInBottom">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <div class="bg-gradient-blue shadow-blue border-radius-lg py-3 pe-1">
                                 <h4 class="text-white font-weight-bolder text-center my-2">Iniciar Sesión</h4>
                             </div>
                         </div>
                         <div class="card-body">
                             <form role="form" class="text-start" @submit.prevent="submit">
+                                <p class="text-center text-sm mt-2 mb-4">Por favor ingrese sus credenciales de acceso.</p>
                                 <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
+                                    <label class="form-label">Correo Electrónico</label>
                                     <input type="email"
-                                    class="form-control" :class="{ 'is-invalid': errors.email}"
-                                    v-model="form.email"
-                                    >
+                                        class="form-control" :class="{ 'is-invalid': errors.email }"
+                                        v-model="form.email"
+                                        autofocus
+                                        >
                                     <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
                                 </div>
                                 <div class="input-group input-group-outline mb-3">
-                                    <label class="form-label">Password</label>
+                                    <label class="form-label">Contraseña</label>
                                     <input type="password"
-                                    class="form-control" :class="{ 'is-invalid': errors.password}"
-                                    v-model="form.password"
-                                    autocomplete="current-password">
+                                        class="form-control" :class="{ 'is-invalid': errors.password }"
+                                        v-model="form.password"
+                                        autocomplete="current-password">
                                     <div v-if="errors.password" class="invalid-feedback">{{ errors.password }}</div>
                                 </div>
                                 <div class="form-check form-switch d-flex align-items-center mb-3">
                                     <input class="form-check-input" type="checkbox" id="rememberMe" v-model="form.remember" name="remember">
-                                    <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
+                                    <label class="form-check-label mb-0 ms-2" for="rememberMe">Mantener Sesión</label>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Ingresar</button>
+                                    <button type="submit" class="btn bg-gradient-blue w-100 my-4 mb-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Ingresar</button>
                                 </div>
-                                <p v-if="canResetPassword" :href="route('password.request')" class="mt-4 text-sm text-center">
-                                    Forgot your password?
-                                </p>
+                                <div class="text-center py-2">
+                                    <Link v-if="canResetPassword" :href="route('password.request')" class="text-sm text-dark">
+                                        Olvidé mi contraseña?
+                                    </Link>
+                                </div>
                             </form>
                             <div v-if="status" class="mb-4 font-medium text-sm text-success">
                                 {{ status }}
@@ -99,7 +100,6 @@ export default {
     components: {
         Head,
         Link,
-        useForm,
     },
 
     props: {

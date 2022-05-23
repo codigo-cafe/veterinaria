@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +32,18 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('Admin/Dashboard', [
+            'usuarios' => User::all()->count(),
+        ]);
     })->name('dashboard');
+
+    Route::resource('usuarios', UsuarioController::class)->names([
+        'index' => 'usuarios.index',
+        'create' => 'usuarios.create',
+        'store' => 'usuarios.store',
+        'show' => 'usuarios.show',
+        'edit' => 'usuarios.edit',
+        'update' => 'usuarios.update',
+        'destroy' => 'usuarios.destroy',
+    ]);
 });

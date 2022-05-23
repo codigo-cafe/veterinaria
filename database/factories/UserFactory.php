@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use Carbon\Carbon;
 
 class UserFactory extends Factory
 {
@@ -25,11 +26,20 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Juan',
-            'email' => 'juan@hotmail.com',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'cedula_per' => '123456789',
+            'nom_per' => 'Juan Camilo',
+            'ape_per' => 'Saenz Valencia',
+            'dir_per' => 'Direccion',
+            'celular_per' => '789456123',
+            'correo_per' => 'juan@hotmail.com',
+            'contrasena_per' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'sexo_per' => 'Masculino',
+            'edad_per' => 25,
+            'fecnac_per' => Carbon::createFromFormat('Y-m-d', '2000-04-10'),
+            'fecinicio_per' => Carbon::createFromFormat('Y-m-d', '2022-05-15'),
+            'fecfinal_per' => Carbon::createFromFormat('Y-m-d', '2025-05-15'),
+            'cargo_per' => 'Administrador',
+            'profe_per' => 'Doctor',
         ];
     }
 

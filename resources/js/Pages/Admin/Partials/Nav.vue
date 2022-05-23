@@ -17,7 +17,7 @@
 					</li>
 					<li class="nav-item dropdown pe-2 d-flex align-items-center">
 						<a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-							<span class="text-secondary font-weight-bold d-xl-inline d-none">{{ $page.props.user.name}}</span>
+							<span class="text-secondary font-weight-bold d-xl-inline d-none">{{ $page.props.user.nom_per}} {{ $page.props.user.ape_per }}</span>
 							<i class="fa fa-user cursor-pointer ps-2"></i>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end px-2 py-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
@@ -25,11 +25,11 @@
 								<a class="dropdown-item border-radius-md" href="javascript:;">
 									<div class="d-flex py-1">
 										<div class="my-auto">
-											<img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" class="avatar avatar-sm  me-3 ">
+											<img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.nom_per" class="avatar avatar-sm  me-3 ">
 										</div>
 										<div class="d-flex flex-column justify-content-center">
 											<h6 class="text-sm font-weight-normal mb-1">
-												<span class="font-weight-bold">{{ $page.props.user.name }}</span>
+												<span class="font-weight-bold">{{ $page.props.user.nom_per }} {{ $page.props.user.ape_per }}</span>
 											</h6>
 											<p class="text-xs text-secondary mb-0">
 												<i class="fa fa-shield-alt me-1"></i>
@@ -44,9 +44,9 @@
 	                                <a class="dropdown-item border-radius-md" href="#" v-on:click="logout">
 	                                    <div class="d-flex py-1">
 											<div class="my-auto">
-												<i class="fas fa-power-off fa-lg avatar avatar-sm  me-3 text-danger "></i>
+												<i class="fas fa-power-off fa-lg avatar avatar-sm  me-3 text-danger d-flex"></i>
 											</div>
-											<div class="d-flex flex-column justify-content-center">
+											<div class="d-flex flex-column justify-content-center align-items-center">
 												<h6 class="text-sm font-weight-normal mb-0">
 													<span class="font-weight-bold">Cerrar Sesión</span>
 												</h6>
