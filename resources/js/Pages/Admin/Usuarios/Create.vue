@@ -1,7 +1,7 @@
 <template>
 	<app-layout>
 		<div class="row mb-5 d-flex justify-content-center">
-			<div class="col-lg-9 mt-lg-0 mt-4">
+			<div class="col-lg-10 mt-lg-0 mt-4">
 				<div class="card mt-4">
 					<form role="form" @submit.prevent="submit" class="needs-validation">
 						<div class="card-header">
@@ -205,7 +205,7 @@
 	</app-layout>
 </template>
 <script>
-import AppLayout from '@/Pages/Admin/Layouts/AppLayout'
+import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import moment from 'moment';
 

@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\MascotaController;
 use App\Models\User;
+use App\Models\Cliente;
+use App\Models\Mascota;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +38,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard', [
             'usuarios' => User::all()->count(),
+            'clientes' => Cliente::all()->count(),
         ]);
     })->name('dashboard');
 
@@ -45,5 +50,25 @@ Route::middleware([
         'edit' => 'usuarios.edit',
         'update' => 'usuarios.update',
         'destroy' => 'usuarios.destroy',
+    ]);
+
+    Route::resource('clientes', ClienteController::class)->names([
+        'index' => 'clientes.index',
+        'create' => 'clientes.create',
+        'store' => 'clientes.store',
+        'show' => 'clientes.show',
+        'edit' => 'clientes.edit',
+        'update' => 'clientes.update',
+        'destroy' => 'clientes.destroy',
+    ]);
+
+    Route::resource('mascotas', MascotaController::class)->names([
+        'index' => 'mascotas.index',
+        'create' => 'mascotas.create',
+        'store' => 'mascotas.store',
+        'show' => 'mascotas.show',
+        'edit' => 'mascotas.edit',
+        'update' => 'mascotas.update',
+        'destroy' => 'mascotas.destroy',
     ]);
 });

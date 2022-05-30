@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'dir_per' => 'Direccion',
             'celular_per' => '789456123',
             'correo_per' => 'juan@hotmail.com',
-            'contrasena_per' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'contrasena_per' => 'password', // $2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
             'sexo_per' => 'Masculino',
             'edad_per' => 25,
             'fecnac_per' => Carbon::createFromFormat('Y-m-d', '2000-04-10'),

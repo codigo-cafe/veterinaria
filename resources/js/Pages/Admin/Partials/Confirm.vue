@@ -10,12 +10,12 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div v-if="infomodal.usuario" class="text-center">
+					<div v-if="infomodal.nombre" class="text-center">
 						<h4 class="text-gradient text-danger">
 							<i class="fas fa-bell"></i>
 						</h4>
 						<p>
-							¿{{ infomodal.mensaje }}<strong>{{ infomodal.usuario.nom_per + " " + infomodal.usuario.ape_per }}</strong>?
+							¿{{ infomodal.mensaje }}<strong>{{ infomodal.nombre }}</strong>?
 						</p>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 
 		methods: {
 			destroy() {
-				this.$inertia.delete(this.route(this.infomodal.url, this.infomodal.usuario.id));
+				this.$inertia.delete(this.route(this.infomodal.url, this.infomodal.id));
 				this.closeModalConfirm();
 			},
 

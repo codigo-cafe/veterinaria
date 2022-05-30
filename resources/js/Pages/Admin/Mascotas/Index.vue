@@ -8,10 +8,10 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<h6 class="card-title text-dark text-gradient">Lista de Usuarios</h6>
+					<h6 class="card-title text-dark text-gradient">Lista de Mascotas</h6>
 					<div class="d-flex justify-content-end">
-						<Link :href="route('usuarios.create')" class="btn btn-blue">
-							<i class="fas fa-plus"></i> Registrar Usuario
+						<Link :href="route('mascotas.create')" class="btn btn-blue">
+							<i class="fas fa-plus"></i> Registrar Mascota
 						</Link>
 					</div>
 					<div class="row">
@@ -39,64 +39,66 @@
 							<thead class="thead-light">
 								<tr>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('id')" class="w-100 d-inline-flex justify-content-between text-secondary">#</a>
-										<i v-if="params.field ==='id' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
-										<i v-if="params.field ==='id' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
+										<a href="#" @click="sort('id_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">#</a>
+										<i v-if="params.field ==='id_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
+										<i v-if="params.field ==='id_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('cedula_per')" class="w-100 d-inline-flex justify-content-between text-secondary">Cédula</a>
-										<i v-if="params.field ==='cedula_per' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='cedula_per' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+										<a href="#" @click="sort('cedula_clie')" class="w-100 d-inline-flex justify-content-between text-secondary">Cédula</a>
+										<i v-if="params.field ==='cedula_clie' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field ==='cedula_clie' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('nom_per')" class="w-100 d-inline-flex justify-content-between text-secondary">Nombre</a>
-										<i v-if="params.field ==='nom_per' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='nom_per' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+										<a href="#" @click="sort('nom_clie')" class="w-100 d-inline-flex justify-content-between text-secondary">Nombre</a>
+										<i v-if="params.field ==='nom_clie' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field ==='nom_clie' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('ape_per')" class="w-100 d-inline-flex justify-content-between text-secondary">Apellidos</a>
-										<i v-if="params.field ==='ape_per' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='ape_per' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+										<a href="#" @click="sort('ape_clie')" class="w-100 d-inline-flex justify-content-between text-secondary">Apellidos</a>
+										<i v-if="params.field ==='ape_clie' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field ==='ape_clie' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
 									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dirección</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+										<a href="#" @click="sort('nom_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Mascota</a>
+										<i v-if="params.field ==='nom_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field ==='nom_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+									</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Raza</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Celular</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sexo</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Edad</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="usuario in usuarios.data" :key="usuario.id">
-									<td class="text-sm font-weight-normal">{{ usuario.id }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.cedula_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.nom_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.ape_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.dir_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.celular_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.correo_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.sexo_per }}</td>
-									<td class="text-sm font-weight-normal">{{ usuario.edad_per }}</td>
+								<tr v-for="mascota in mascotas.data" :key="mascota.id_masc">
+									<td class="text-sm font-weight-normal">{{ mascota.id_masc }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.cliente.cedula_clie }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.cliente.nom_clie }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.cliente.ape_clie }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.nom_masc }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.raza_masc }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.cliente.celular_clie }}</td>
+									<td class="text-sm font-weight-normal">{{ mascota.cliente.correo_clie }}</td>
 									<td class="text-sm">
 										<div class="d-flex justify-content-center align-items-center">
-											<Link :href="route('usuarios.show', usuario.id)" class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Mostrar">
+											<Link :href="route('mascotas.show', mascota.id_masc)" class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Mostrar">
 												<i class="material-icons text-lg">visibility</i>
 											</Link>
-											<Link :href="route('usuarios.edit', usuario.id)" class="btn btn-icon-only btn-rounded btn-outline-warning mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Editar">
+											<Link :href="route('mascotas.edit', mascota.id_masc)" class="btn btn-icon-only btn-rounded btn-outline-warning mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Editar">
 												<i class="material-icons text-lg">edit</i>
 											</Link>
-											<button type="button" @click="destroy(usuario)" class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
+											<button type="button" @click="destroy(mascota)" class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
 												<i class="material-icons text-lg">clear</i>
 											</button>
 										</div>
 									</td>
 								</tr>
-								<tr v-if="usuarios.data.length == 0">
+								<tr v-if="mascotas.data.length == 0">
 									<td class="text-center" colspan="100%">No se encontraron resultados</td>
 								</tr>
 							</tbody>
 						</table>
-						<pagination class="mt-4 mb-2" :links="usuarios.links" :results="usuarios" />
+						<pagination class="mt-4 mb-2" :links="mascotas.links" :results="mascotas" />
 					</div>
 					<!--  end card  -->
 				</div>
@@ -122,7 +124,7 @@ export default {
 	},
 
 	props: {
-		usuarios: Object,
+		mascotas: Object,
 		filters: Object,
 	},
 
@@ -131,14 +133,14 @@ export default {
 			params: {
 				entries: this.filters.entries != null ? this.filters.entries : 10,
 				search: this.filters.search != null ? this.filters.search : '',
-				field: this.filters.field != null ? this.filters.field : 'id',
+				field: this.filters.field != null ? this.filters.field : 'id_masc',
 				direction: this.filters.direction != null ? this.filters.direction : 'asc',
 			},
 			infomodal: {
 				id: null,
 				nombre: null,
-				mensaje: "Seguro de eliminar al usuario: ",
-				url: "usuarios.destroy",
+				mensaje: "Seguro de eliminar a la mascota: ",
+				url: "mascotas.destroy",
 			},
 		}
 	},
@@ -150,7 +152,7 @@ export default {
 	watch: {
 		params: {
 			handler() {
-				this.$inertia.get(this.route('usuarios.index'), this.params, { replace: true, preserveState: true });
+				this.$inertia.get(this.route('mascotas.index'), this.params, { replace: true, preserveState: true });
 			},
 			deep: true,
 		},
@@ -162,9 +164,9 @@ export default {
 			this.params.direction = this.params.direction === 'asc' ? 'desc' : 'asc'
 		},
 
-		destroy(usuario){
-			this.infomodal.id = usuario.id;
-			this.infomodal.nombre = usuario.nom_per + " " + usuario.ape_per;
+		destroy(mascota){
+			this.infomodal.id = mascota.id_masc;
+			this.infomodal.nombre = mascota.nom_masc;
 			var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
 			confirmModal.show()
 		},
@@ -172,12 +174,9 @@ export default {
 		focusripples() {
 			this.$nextTick(function () {
 				//tooltips
-				var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+				var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 				var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-					return new bootstrap.Tooltip(tooltipTriggerEl, {
-						container: 'body',
-						trigger : 'hover'
-					})
+					return new bootstrap.Tooltip(tooltipTriggerEl)
 				})
 
 				// Material Design Input function

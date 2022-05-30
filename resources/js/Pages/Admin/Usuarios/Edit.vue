@@ -183,7 +183,7 @@
 	</app-layout>
 </template>
 <script>
-import AppLayout from '@/Pages/Admin/Layouts/AppLayout'
+import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import moment from 'moment';
 

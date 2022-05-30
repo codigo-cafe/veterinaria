@@ -9,7 +9,7 @@
             </Link>
         </div>
         <hr class="horizontal light mt-0 mb-2">
-        <div class="collapse navbar-collapse w-auto max-height-vh-100" id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse w-auto max-height-vh-100 h-auto" id="sidenav-scrollbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('dashboard') }" :href="route('dashboard')">
@@ -28,12 +28,20 @@
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('clientes.*') }" :href="route('clientes.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Clientes</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('mascotas.*') }" :href="route('mascotas.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-paw"></i>
                         </div>
                         <span class="nav-link-text ms-1">Mascotas</span>
-                    </a>
+                    </Link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">
@@ -86,6 +94,8 @@ export default {
     data() {
         return {
             usuarios: false,
+            clientes: false,
+            mascotas: false,
         }
     },
 
@@ -96,6 +106,20 @@ export default {
             case 'usuarios.index':
                 this.usuarios = true;
             break;
+            case 'clientes.index':
+                this.clientes = true;
+            break;
+            case 'mascotas.index':
+                this.mascotas = true;
+            break;
+        }
+
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     },
 }
