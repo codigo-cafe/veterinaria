@@ -27,6 +27,6 @@ class Cliente extends Model
 
     public function mascotas()
     {
-        return $this->hasMany(Mascota::class);
+        return $this->hasMany(Mascota::class, 'id_clie');
     }
 }

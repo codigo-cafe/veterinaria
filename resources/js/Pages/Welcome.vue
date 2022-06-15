@@ -35,7 +35,7 @@
             </nav>
 
             <header class="bg-gradient-dark">
-                <div id="carouselExampleControls" class="page-header min-vh-100 carousel slide" data-bs-ride="carousel">
+                <div id="carouselVeterinaria" class="page-header min-vh-100 carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="page-header min-vh-100" style="background-image: url('/img/bg-1.jpg');">
@@ -81,11 +81,11 @@
                         </div>
                     </div>
                     <div class="min-vh-100 position-absolute w-100 top-0">
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                        <a class="carousel-control-prev" href="#carouselVeterinaria" role="button" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon position-absolute bottom-50" aria-hidden="true"></span>
                             <span class="visually-hidden">Anterior</span>
                         </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                        <a class="carousel-control-next" href="#carouselVeterinaria" role="button" data-bs-slide="next">
                             <span class="carousel-control-next-icon position-absolute bottom-50" aria-hidden="true"></span>
                             <span class="visually-hidden">Siguiente</span>
                         </a>

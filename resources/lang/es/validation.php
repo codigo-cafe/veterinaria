@@ -186,6 +186,31 @@ return [
         'fecnac_masc' => 'fecha de nacimiento',
         'edad_masc' => 'edad',
         'pelaje_masc' => 'pelaje',
+
+        'numserie_pro' => 'número de serie',
+        'nom_pro' => 'nombre',
+        'fecven_pro' => 'fecha de vencimiento',
+        'cantidad_pro' => 'cantidad',
+        'precio_pro' => 'precio',
+
+        'fech_aten' => 'fecha de atención',
+        'tipo_aten' => 'tipo de atención',
+        'peso_aten' => 'peso',
+        'temp_aten' => 'temperatura',
+        'descrip_aten' => 'descripción',
+        'obtencion_masc' => 'obtención',
+        'id_masc' => 'mascota',
+
+        'fecing_hosp' => 'fecha de ingreso',
+        'fecfin_hosp' => 'fecha de salida',
+        'estado_hosp' => 'estado de salud',
+        'descrip_hosp' => 'observaciones',
+        'signologia' => 'signos',
+        'temp_corp' => 'temperatura',
+        'color_mucosa' => 'color de la mucosa',
+        'palpa_abdominal' => 'palpa abdominal',
+        'piel' => 'piel',
+        'frecue_cardia' => 'frecuencia cardiaca',
     ],
 
 ];

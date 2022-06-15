@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Cliente;
 use App\Models\Mascota;
+use App\Models\Imagen;
 use Illuminate\Http\Request;
 use App\Http\Requests\MascotaRequest;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use DB;
 
 class MascotaController extends Controller
 {
@@ -35,7 +39,7 @@ class MascotaController extends Controller
         }
 
         if(request()->has(['field', 'direction'])) {
-            $query->join('clientes', 'mascotas.id_masc', '=', 'clientes.id_clie')
+            $query->join('clientes', 'mascotas.id_clie', '=', 'clientes.id_clie')
                 ->orderBy(request('field'), request('direction'));
         }
 
@@ -65,7 +69,26 @@ class MascotaController extends Controller
      */
     public function store(MascotaRequest $request)
     {
-        Mascota::create($request->all());
+        $mascota = Mascota::create($request->all());
+
+        if ($request->hasFile('imagenes_masc'))
+        {
+            foreach ($request->file('imagenes_masc') as $key => $imagen)
+            {
+                $file = $imagen->store('public');
+                $image = Image::make(Storage::get($file))
+                    ->widen(600)
+                    ->limitColors(255)
+                    ->encode();
+
+                Storage::put($file, (string) $image);
+
+                Imagen::create([
+                    'url_img' => Storage::url($file),
+                    'id_masc' => $mascota->id_masc,
+                ]);
+            }
+        }
         return redirect()->route('mascotas.index')->with('status', 'Mascota registrada correctamente.');
     }
 
@@ -78,7 +101,7 @@ class MascotaController extends Controller
     public function show(Mascota $mascota)
     {
         return Inertia::render('Admin/Mascotas/Show', [
-            'mascota' => $mascota->load('cliente'),
+            'mascota' => $mascota->load('cliente', 'imagenes'),
         ]);
     }
 
@@ -93,6 +116,7 @@ class MascotaController extends Controller
         return Inertia::render('Admin/Mascotas/Edit', [
             'clientes' => Cliente::all(),
             'mascota' => $mascota,
+            'imagenes_mascota' => $mascota->imagenes()->get()->pluck('url_img'),
         ]);
     }
 
@@ -106,6 +130,38 @@ class MascotaController extends Controller
     public function update(MascotaRequest $request, Mascota $mascota)
     {
         $mascota->update($request->all());
+        if ($request->imagenes_masc_recovered)
+        {
+            $photos_to_delete = DB::table('imagenes')->whereNotIn('url_img', $request->imagenes_masc_recovered)->where('id_masc', '=', $mascota->id_masc)->get()->pluck('url_img');
+            $photoPath = str_replace('storage', 'public', $photos_to_delete);
+            Storage::delete(json_decode($photoPath,true));
+            DB::table('imagenes')->whereNotIn('url_img', $request->imagenes_masc_recovered)->where('id_masc', '=', $mascota->id_masc)->delete();
+        } else {
+            $photos_to_delete = DB::table('imagenes')->where('id_masc', '=', $mascota->id_masc)->get()->pluck('url_img');
+
+            $photoPath = str_replace('storage', 'public', $photos_to_delete);
+            Storage::delete(json_decode($photoPath,true));
+            DB::table('imagenes')->where('id_masc', '=', $mascota->id_masc)->delete();
+        }
+
+        if ($request->hasFile('imagenes_masc'))
+        {
+            foreach ($request->file('imagenes_masc') as $key => $imagen)
+            {
+                $file = $imagen->store('public');
+                $image = Image::make(Storage::get($file))
+                    ->widen(600)
+                    ->limitColors(255)
+                    ->encode();
+
+                Storage::put($file, (string) $image);
+
+                Imagen::create([
+                    'url_img' => Storage::url($file),
+                    'id_masc' => $mascota->id_masc,
+                ]);
+            }
+        }
         return redirect()->route('mascotas.index')->with('status', 'Mascota modificada correctamente.');
     }
 
@@ -117,6 +173,11 @@ class MascotaController extends Controller
      */
     public function destroy(Mascota $mascota)
     {
+        $photos_to_delete = DB::table('imagenes')->where('id_masc', '=', $mascota->id_masc)->get()->pluck('url_img');
+        $photoPath = str_replace('storage', 'public', $photos_to_delete);
+        Storage::delete(json_decode($photoPath,true));
+        DB::table('imagenes')->where('id_masc', '=', $mascota->id_masc)->delete();
+
         $mascota->delete();
         return redirect()->route('mascotas.index')->with('status', 'Mascota eliminada correctamente.');
     }

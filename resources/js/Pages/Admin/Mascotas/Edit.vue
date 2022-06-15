@@ -1,11 +1,11 @@
 <template>
 	<app-layout>
-		<div class="row mb-5 d-flex justify-content-center">
-			<div class="col-lg-9 mt-lg-0 mt-4">
-				<div class="card mt-4">
-					<form role="form" @submit.prevent="submit" class="needs-validation">
+		<form role="form" @submit.prevent="submit" class="needs-validation">
+			<div class="row mb-5 d-flex justify-content-center">
+				<div class="col-lg-9 mt-lg-0 mt-4">
+					<div class="card mt-4">
 						<div class="card-header">
-							<h5 class="mb-0">Editar Cliente</h5>
+							<h5 class="mb-0">Editar Mascota</h5>
 						</div>
 						<div class="card-body pt-0">
 							<div class="row">
@@ -13,7 +13,7 @@
 									<div class="input-group input-group-static"
 										:class="{ 'is-invalid': errors.id_clie }">
 										<label for="cliente" class="ms-0">Dueño</label>
-										<select v-model="form.id_clie" class="form-control" id="cliente">
+										<select v-model="form.id_clie" class="form-control" id="cliente" autofocus>
 											<option value="">Seleccione un Dueño</option>
 											<option :value="cliente.id_clie" v-for="cliente in clientes" :key="cliente.id_clie">{{ cliente.cedula_clie + " - " + cliente.nom_clie + " " + cliente.ape_clie}}</option>
 										</select>
@@ -152,19 +152,44 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="col-lg-9 col-md-12 mt-lg-0 mt-4">
+					<div class="card mt-4">
+						<div class="card-header">
+							<h5 class="mb-0">Imágenes de la mascota</h5>
+						</div>
+						<div class="card-body pt-0">
+							<label>Imágenes opcionales</label>
+							<div class="input-group input-group-static d-block"
+								:class="{ 'is-invalid': errors['imagenes_masc.0'] }">
+								<file-pond
+								name="test"
+								ref="pond"
+								class-name="my-pond"
+								allow-multiple="true"
+								accepted-file-types="image/jpeg, image/png"
+								maxFileSize="5MB"
+								v-bind:files="form.imagenes_masc"
+								v-on:init="handleFilePondInit"/>
+								<div v-if="errors['imagenes_masc.0']" class="invalid-feedback">
+									{{ errors['imagenes_masc.0'] }}
+								</div>
+							</div>
+						</div>
 						<hr class="dark horizontal my-0">
 						<div class="card-footer">
 							<div class="row">
-								<div class="col-lg-8 col-12 actions text-end ms-auto">
+								<div class="col-lg-12 col-12 actions text-end ms-auto">
 									<Link :href="route('mascotas.index')" class="btn btn-outline-dark mb-0">Cancelar</Link>
 									<button type="submit" class="btn bg-gradient-blue mb-0 ms-1" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Guardar</button>
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</app-layout>
 </template>
 <script>
@@ -172,21 +197,43 @@ import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import moment from 'moment';
 
+// Import FilePond
+import vueFilePond, { setOptions } from 'vue-filepond';
+
+// Import plugins
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+
+// Import styles
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+// Create FilePond component
+const FilePond = vueFilePond( FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFileValidateSize );
+
+setOptions({
+	labelIdle: 'Soltar imágenes aquí...',
+});
+
 export default {
 	components: {
 		AppLayout,
 		Link,
+		FilePond,
 	},
 
 	props: {
 		clientes: Object,
 		mascota: Object,
-		errors: Object
+		errors: Object,
+		imagenes_mascota: Array,
 	},
 
 	data() {
 		return {
 			form: useForm({
+				_method: 'PUT',
 				nom_masc: this.mascota.nom_masc,
 				raza_masc: this.mascota.raza_masc,
 				sexo_masc: this.mascota.sexo_masc,
@@ -199,6 +246,8 @@ export default {
 				vivienda_masc: this.mascota.vivienda_masc,
 				alimento_masc: this.mascota.alimento_masc,
 				id_clie: this.mascota.id_clie,
+				imagenes_masc: this.imagenes_mascota,
+				imagenes_masc_recovered: [],
 			}),
 			limitmax: null,
 		}
@@ -210,14 +259,29 @@ export default {
 
 	methods: {
 		submit() {
-            this.form.put(route('mascotas.update', this.mascota.id_masc), {
+			this.form.imagenes_masc = [];
+			const files = this.$refs.pond.getFiles();
+			for ( var i in files) {
+				if (files[i].file instanceof File) {
+					console.log('file')
+					this.form.imagenes_masc.push(files[i].file)
+				} else {
+					console.log('blog')
+					this.form.imagenes_masc_recovered.push('/storage/'+files[i].file.name);
+				}
+			}
+            this.form.post(route('mascotas.update', this.mascota.id_masc), {
                 onSuccess: () => this.form.reset(),
             });
         },
 
 		changedate() {
         	this.form.edad_masc = moment().diff(this.form.fecnac_masc, 'years');
-        }
+        },
+
+        handleFilePondInit: function() {
+            this.$refs.pond.getFiles();
+        },
 	}
 }
 </script>

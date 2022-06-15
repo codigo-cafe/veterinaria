@@ -6,8 +6,14 @@
 					<ul class="nav flex-column bg-white border-radius-lg p-3">
 						<li class="nav-item">
 							<a class="nav-link text-dark d-flex" data-scroll="" href="#mascota">
-								<i class="material-icons text-lg me-2">person</i>
+								<i class="material-icons text-lg me-2">pets</i>
 								<span class="text-sm">Mascota</span>
+							</a>
+						</li>
+						<li class="nav-item pt-2">
+							<a class="nav-link text-dark d-flex" data-scroll="" href="#dueno">
+								<i class="material-icons text-lg me-2">person</i>
+								<span class="text-sm">Dueño</span>
 							</a>
 						</li>
 						<li class="nav-item pt-2">
@@ -23,9 +29,9 @@
 							</a>
 						</li>
 						<li class="nav-item pt-2">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#ocupacion">
-								<i class="material-icons text-lg me-2">workspace_premium</i>
-								<span class="text-sm">Ocupación</span>
+							<a class="nav-link text-dark d-flex" data-scroll="" href="#imagenes">
+								<i class="material-icons text-lg me-2">collections</i>
+								<span class="text-sm">Imágenes</span>
 							</a>
 						</li>
 					</ul>
@@ -91,14 +97,78 @@
 						<div class="row mt-4">
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
-									<label>Edad</label>
-									<input type="text" class="form-control" :value="mascota.edad_masc + ' años' " disabled>
+									<label>Pelaje</label>
+									<input type="text" class="form-control" :value="mascota.pelaje_masc" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Sexo</label>
 									<input type="text" class="form-control" :value="mascota.sexo_masc" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Fecha de Nacimiento</label>
+									<input type="text" class="form-control" :value="fecnac_masc" disabled>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Edad</label>
+									<input type="text" class="form-control" :value="mascota.edad_masc + ' años' " disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card mt-4" id="dueno">
+					<div class="card-header">
+						<h5 class="mb-0">Dueño</h5>
+					</div>
+					<div class="card-body pt-0">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Nombre</label>
+									<input type="text" class="form-control" :value="mascota.cliente.nom_clie" disabled>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Apellidos</label>
+									<input type="text" class="form-control" :value="mascota.cliente.ape_clie" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Cédula</label>
+									<input type="text" class="form-control" :value="mascota.cliente.cedula_clie" disabled>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Ocupación</label>
+									<input type="text" class="form-control" :value="mascota.cliente.ocupacion_clie" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Edad</label>
+									<input type="text" class="form-control" :value="mascota.cliente.edad_clie + ' años'" disabled>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-static">
+									<label>Sexo</label>
+									<input type="text" class="form-control" :value="mascota.cliente.sexo_clie" disabled>
 								</div>
 							</div>
 						</div>
@@ -143,21 +213,44 @@
 					</div>
 				</div>
 
-				<div class="card mt-4" id="ocupacion">
+				<div class="card mt-4" id="imagenes">
 					<div class="card-header d-flex">
-						<h5 class="mb-0">Pelaje</h5>
+						<h5 class="mb-0">Imágenes</h5>
 					</div>
 					<div class="card-body pt-0">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Pelaje</label>
-									<input type="text" class="form-control" :value="mascota.pelaje_masc" disabled>
+						<div class="row d-flex justify-content-center">
+							<div class="col-md-12">
+								<div v-if="mascota.imagenes.length === 0" class="alert alert-secondary alert-dismissible fade show mb-4 text-white" role="alert">
+									<span class="alert-icon me-2"><i class="fas fa-bell"></i></span>
+									<span class="alert-text"><strong>Mensaje:</strong> Esta mascota aún no cuenta con imágenes.</span>
+									<button type="button" class="btn-close d-flex justify-content-center align-items-center" data-bs-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<div id="carouselImagenesMascota" class="carousel slide" data-bs-ride="carousel">
+									<div class="carousel-indicators">
+										<button type="button" data-bs-target="#carouselImagenesMascota" :data-bs-slide-to="index" :class="{ 'active' : index === 0 }" :aria-current="{ true : index === 0 }" aria-label="Imagen" v-for="(imagen, index) in mascota.imagenes" :key="imagen.id_img"></button>
+									</div>
+									<div class="carousel-inner">
+										<div class="carousel-item" :class="{ 'active' : index === 0 }" v-for="(imagen, index) in mascota.imagenes" :key="imagen.id_img">
+											<img :src="imagen.url_img" class="d-block w-100 carousel-cover" alt="mascota.nom_masc">
+										</div>
+									</div>
+									<button class="carousel-control-prev" type="button" data-bs-target="#carouselImagenesMascota" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Anterior</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#carouselImagenesMascota" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Siguiente</span>
+									</button>
 								</div>
 							</div>
 						</div>
 						<div class="row mt-5">
-							<div class="col-lg-8 col-12 actions text-end ms-auto">
+							<div class="col-lg-12 col-12 actions text-end ms-auto">
 								<Link :href="route('mascotas.index')" class="btn btn-outline-dark mb-0">Volver</Link>
 								<Link :href="route('mascotas.edit', mascota.id_masc)" class="btn bg-gradient-blue mb-0 ms-1">Editar</Link>
 							</div>
@@ -171,6 +264,7 @@
 <script>
 import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
 
 export default {
 	components: {
@@ -180,5 +274,11 @@ export default {
 	props: {
 		'mascota': Object
 	},
+
+	data() {
+		return {
+			fecnac_masc: moment(this.mascota.fecnac_masc).format('DD/MM/YYYY'),
+		}
+	}
 }
 </script>

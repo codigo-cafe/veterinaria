@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Cliente;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Imagen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Mascota extends Model
 {
@@ -31,5 +33,10 @@ class Mascota extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'id_clie');
+    }
+
+    public function imagenes()
+    {
+        return $this->hasMany(Imagen::class, 'id_masc');
     }
 }

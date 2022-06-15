@@ -133,7 +133,7 @@ export default {
 			params: {
 				entries: this.filters.entries != null ? this.filters.entries : 10,
 				search: this.filters.search != null ? this.filters.search : '',
-				field: this.filters.field != null ? this.filters.field : 'id',
+				field: this.filters.field != null ? this.filters.field : 'id_clie',
 				direction: this.filters.direction != null ? this.filters.direction : 'asc',
 			},
 			infomodal: {

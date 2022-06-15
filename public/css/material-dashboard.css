@@ -86,6 +86,20 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.hide-msg {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+}
+.show-msg {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+.w-5vw {
+  width: 5vw;
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;
@@ -22875,6 +22889,20 @@ hr.horizontal.gray-light {
 
 .bg-cover {
   background-size: cover;
+}
+
+.carousel-containe {
+  object-fit: contain;
+  object-position: center;
+  overflow: hidden;
+  height:50vh;
+}
+
+.carousel-cover {
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  height:50vh;
 }
 
 .mask {

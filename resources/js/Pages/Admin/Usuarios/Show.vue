@@ -89,22 +89,22 @@
 							</div>
 							<div class="col-6">
 								<div class="input-group input-group-static">
-									<label>Fecha de Nacimiento</label>
-									<input type="text" class="form-control" :value="usuario.fecnac_per" disabled>
+									<label>Sexo</label>
+									<input type="text" class="form-control" :value="usuario.sexo_per" disabled>
 								</div>
 							</div>
 						</div>
 						<div class="row mt-4">
 							<div class="col-6">
 								<div class="input-group input-group-static">
-									<label>Edad</label>
-									<input type="text" class="form-control" :value="usuario.edad_per + ' años'" disabled>
+									<label>Fecha de Nacimiento</label>
+									<input type="text" class="form-control" :value="fecnac_per" disabled>
 								</div>
 							</div>
 							<div class="col-6">
 								<div class="input-group input-group-static">
-									<label>Sexo</label>
-									<input type="text" class="form-control" :value="usuario.sexo_per" disabled>
+									<label>Edad</label>
+									<input type="text" class="form-control" :value="usuario.edad_per + ' años'" disabled>
 								</div>
 							</div>
 						</div>
@@ -158,13 +158,13 @@
 							<div class="col-6">
 								<div class="input-group input-group-static">
 									<label>Fecha de Ingreso</label>
-									<input type="text" class="form-control" :value="usuario.fecinicio_per" disabled>
+									<input type="text" class="form-control" :value="fecinicio_per" disabled>
 								</div>
 							</div>
 							<div class="col-6">
 								<div class="input-group input-group-static">
 									<label>Fecha de Terminación Laboral</label>
-									<input type="text" class="form-control" :value="usuario.fecfinal_per" disabled>
+									<input type="text" class="form-control" :value="fecfinal_per" disabled>
 								</div>
 							</div>
 						</div>
@@ -205,6 +205,7 @@
 <script>
 import AppLayout from '@/Pages/Admin/Layouts/AppLayout'
 import { Link } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
 
 export default {
 	components: {
@@ -214,5 +215,13 @@ export default {
 	props: {
 		'usuario': Object
 	},
+
+	data() {
+		return {
+			fecnac_per: moment(this.usuario.fecnac_per).format('DD/MM/YYYY'),
+			fecinicio_per: moment(this.usuario.fecinicio_per_per).format('DD/MM/YYYY'),
+			fecfinal_per: moment(this.usuario.fecfinal_per).format('DD/MM/YYYY'),
+		}
+	}
 }
 </script>

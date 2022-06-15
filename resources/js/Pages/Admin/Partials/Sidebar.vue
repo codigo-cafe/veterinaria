@@ -44,12 +44,52 @@
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('productos.*') }" :href="route('productos.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-barcode"></i>
                         </div>
                         <span class="nav-link-text ms-1">Productos</span>
-                    </a>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('ventas.*') }" :href="route('ventas.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-cart-plus"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Ventas</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('atenciones.*') }" :href="route('atenciones.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Atención</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('hospitalizaciones.*') }" :href="route('hospitalizaciones.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-briefcase-medical"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Hospitalización</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('examenes.*') }" :href="route('examenes.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-briefcase-medical"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Examenes</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('tratamientos.*') }" :href="route('tratamientos.index')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-briefcase-medical"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Tratamientos</span>
+                    </Link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">
@@ -96,6 +136,10 @@ export default {
             usuarios: false,
             clientes: false,
             mascotas: false,
+            productos: false,
+            ventas: false,
+            atenciones: false,
+            hospitalizaciones: false,
         }
     },
 
@@ -111,6 +155,18 @@ export default {
             break;
             case 'mascotas.index':
                 this.mascotas = true;
+            break;
+            case 'productos.index':
+                this.productos = true;
+            break;
+            case 'ventas.index':
+                this.ventas = true;
+            break;
+            case 'atenciones.index':
+                this.atenciones = true;
+            break;
+            case 'hospitalizaciones.index':
+                this.hospitalizaciones = true;
             break;
         }
 

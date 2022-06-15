@@ -36,6 +36,16 @@ class MascotaRequest extends FormRequest
             'vivienda_masc' => 'required|max:30',
             'alimento_masc' => 'required|max:50',
             'id_clie' => 'required',
+            'imagenes_masc.*' => 'mimes:jpg,jpeg,png,bmp|max:5120',
+        ];
+    }
+
+    public function messages($value='')
+    {
+        return [
+            'imagenes_masc.*.required' => 'Sube al menos una imagen',
+            'imagenes_masc.*.mimes' => 'Solo se permiten imágenes jpeg, png, jpg y bmp',
+            'imagenes_masc.*.max' => '¡Lo siento! El tamaño máximo permitido para una imagen es de 5 MB.',
         ];
     }
 }
