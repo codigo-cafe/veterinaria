@@ -22,7 +22,7 @@
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end px-2 py-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
 							<li class="mb-2">
-								<a class="dropdown-item border-radius-md" href="javascript:;">
+								<Link class="dropdown-item border-radius-md" :href="route('profile.show')">
 									<div class="d-flex py-1">
 										<div class="my-auto">
 											<img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.nom_per" class="avatar avatar-sm  me-3 ">
@@ -37,7 +37,7 @@
 											</p>
 										</div>
 									</div>
-								</a>
+								</Link>
 							</li>
 							<li class="mb-0">
 								<form @submit.prevent="logout">
@@ -63,12 +63,19 @@
 	</nav>
 </template>
 <script>
+import { Link } from '@inertiajs/inertia-vue3';
+
 export default {
+	components: {
+        Link,
+    },
+
 	data(){
 		return {
 			scrollTop: null,
 		}
 	},
+
     mounted(){
     	this.getYPosition()
         var win = navigator.platform.indexOf('Win') > -1;
@@ -80,6 +87,7 @@ export default {
         }
         this.sideNav();
     },
+
     methods: {
     	navbarFixed(state) {
     		// Set Navbar Fixed
@@ -95,6 +103,7 @@ export default {
 			    navbarBlurOnScroll('navbarBlur');
 			}
     	},
+
     	getYPosition() {
     		const self = this;
 		  	window.addEventListener('scroll', function() {
@@ -106,6 +115,7 @@ export default {
 				}
 			});
     	},
+
     	sideNav(){
 			// Toggle Sidenav
             const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
@@ -138,6 +148,7 @@ export default {
             	}
             }
     	},
+
     	logout() {
             this.$inertia.post(route('logout'));
         },

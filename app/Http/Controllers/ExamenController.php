@@ -23,13 +23,14 @@ class ExamenController extends Controller
     {
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:id_exa,nom_masc,raza_masc,sexo_masc,color_masc,espe_masc,edad_masc'],
+            'field' => ['in:id_exa,titu_exa,nom_masc,raza_masc,sexo_masc,color_masc,espe_masc,edad_masc'],
         ]);
 
         $query = Examen::query()->with('mascota');
 
         if(request('search')) {
-            $query->where('nom_masc', 'LIKE', '%'.request('search').'%')
+            $query->where('titu_exa', 'LIKE', '%'.request('search').'%')
+                ->orwhere('nom_masc', 'LIKE', '%'.request('search').'%')
                 ->orwhere('raza_masc', 'LIKE', '%'.request('search').'%')
                 ->orwhere('sexo_masc', 'LIKE', '%'.request('search').'%')
                 ->orwhere('color_masc', 'LIKE', '%'.request('search').'%')
@@ -68,23 +69,18 @@ class ExamenController extends Controller
      */
     public function store(ExamenRequest $request)
     {
-        if ($request->id_masc) {
-            foreach ($request->examenes as $key => $examen)
-            {
-                $url = md5(microtime()).'.jpg';
-                $resized_image = Image::make($examen['imagen'])->widen(600)->limitColors(255)->stream('jpg', 100);
-                Storage::put('public/'.$url, $resized_image);
+        $url = md5(microtime()).'.jpg';
+        $resized_image = Image::make($request->img_exa)->widen(600)->limitColors(255)->stream('jpg', 100);
+        Storage::put('public/'.$url, $resized_image);
 
-                Examen::create(
-                    [
-                        'titu_exa' => $examen['titulo'],
-                        'img_exa' => Storage::url($url),
-                        'descrip_exa' => $examen['descripcion'],
-                        'id_masc' => $request->id_masc,
-                    ]
-                );
-            }
-        }
+        Examen::create(
+            [
+                'titu_exa' => $request->titu_exa,
+                'img_exa' => Storage::url($url),
+                'descrip_exa' => $request->descrip_exa,
+                'id_masc' => $request->id_masc,
+            ]
+        );
 
         return redirect()->route('examenes.index')->with('status', 'Examen registrado correctamente.');
     }
@@ -95,10 +91,10 @@ class ExamenController extends Controller
      * @param  \App\Models\Examen  $examen
      * @return \Illuminate\Http\Response
      */
-    public function show(Examen $examen)
+    public function show(Examen $examene)
     {
         return Inertia::render('Admin/Examenes/Show', [
-            'examen' => $examen->load(['mascota.cliente', 'mascota.imagenes']),
+            'examen' => $examene->load(['mascota.cliente', 'mascota.imagenes']),
         ]);
     }
 
@@ -108,11 +104,11 @@ class ExamenController extends Controller
      * @param  \App\Models\Examen  $examen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Examen $examen)
+    public function edit(Examen $examene)
     {
         return Inertia::render('Admin/Examenes/Edit', [
             'mascotas' => Mascota::with('cliente')->get(),
-            'examen' => $examen,
+            'examen' => $examene,
         ]);
     }
 
@@ -123,9 +119,27 @@ class ExamenController extends Controller
      * @param  \App\Models\Examen  $examen
      * @return \Illuminate\Http\Response
      */
-    public function update(ExamenRequest $request, Examen $examen)
+    public function update(ExamenRequest $request, Examen $examene)
     {
-        $examen->update($request->all());
+        if ($request->hasFile('img_exa')) {
+            $delete_img = $examene->img_exa;
+            $url = md5(microtime()).'.jpg';
+            $resized_image = Image::make($request->img_exa)->widen(600)->limitColors(255)->stream('jpg', 100);
+            Storage::put('public/'.$url, $resized_image);
+            $examene->update(
+                [
+                    'titu_exa' => $request->titu_exa,
+                    'img_exa' => Storage::url($url),
+                    'descrip_exa' => $request->descrip_exa,
+                    'id_masc' => $request->id_masc,
+                ]
+            );
+            $photoPath = str_replace('storage', 'public', $delete_img);
+            Storage::delete($photoPath);
+        } else {
+            $examene->update($request->all());
+        }
+
         return redirect()->route('examenes.index')->with('status', 'Examen modificado correctamente.');
     }
 
@@ -135,9 +149,12 @@ class ExamenController extends Controller
      * @param  \App\Models\Examen  $examen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Examen $examen)
+    public function destroy(Examen $examene)
     {
-        $examen->delete();
+        $delete_img = $examene->img_exa;
+        $examene->delete();
+        $photoPath = str_replace('storage', 'public', $delete_img);
+        Storage::delete($photoPath);
         return redirect()->route('examenes.index')->with('status', 'Examen eliminado correctamente.');
     }
 }

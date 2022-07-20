@@ -5,7 +5,7 @@
 				<div class="card mt-4">
 					<form role="form" @submit.prevent="submit" class="needs-validation">
 						<div class="card-header">
-							<h5 class="mb-0">Editar Hospitalización</h5>
+							<h5 class="mb-0">Editar Examen</h5>
 						</div>
 						<div class="card-body pt-0">
 							<div class="row">
@@ -22,116 +22,43 @@
 								</div>
 								<div class="col-md-4">
 									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.temp_corp }">
-										<label>Temperatura de la Mascota</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.temp_corp"
-											placeholder="Temperatura de la Mascota"
-											autofocus>
-										<div v-if="errors.temp_corp" class="invalid-feedback">{{ errors.temp_corp }}</div>
+										:class="{ 'is-invalid': errors.titu_exa }">
+										<label>Título del Examen</label>
+										<input type="text"
+										class="form-control"
+										v-model="form.titu_exa"
+										placeholder="Título del Examen">
+										<div v-if="errors.titu_exa" class="invalid-feedback">{{ errors.titu_exa }}</div>
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.estado_hosp }">
-										<label>Salud de la Mascota</label>
+										:class="{ 'is-invalid': errors.descrip_exa }">
+										<label>Descripción del Examen</label>
 										<input type="text"
-											class="form-control"
-											v-model="form.estado_hosp"
-											placeholder="Salud de la Mascota">
-										<div v-if="errors.estado_hosp" class="invalid-feedback">{{ errors.estado_hosp }}</div>
+										class="form-control"
+										v-model="form.descrip_exa"
+										placeholder="Descripción del Examen">
+										<div v-if="errors.descrip_exa" class="invalid-feedback">{{ errors.descrip_exa }}</div>
 									</div>
 								</div>
 							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.signologia }">
-										<label>Signos del Paciente</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.signologia"
-											placeholder="Signos del Paciente">
-										<div v-if="errors.signologia" class="invalid-feedback">{{ errors.signologia }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.color_mucosa }">
-										<label>Mucosa</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.color_mucosa"
-											placeholder="Color de la Mucosa">
-										<div v-if="errors.color_mucosa" class="invalid-feedback">{{ errors.color_mucosa }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.palpa_abdominal }">
-										<label>Palpa Abdominal</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.palpa_abdominal"
-											placeholder="Palpa abdominal de la Mascota">
-										<div v-if="errors.palpa_abdominal" class="invalid-feedback">{{ errors.palpa_abdominal }}</div>
-									</div>
-								</div>
-							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.piel }">
-										<label>Piel</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.piel"
-											placeholder="Piel de la Mascota">
-										<div v-if="errors.piel" class="invalid-feedback">{{ errors.piel }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.frecue_cardia }">
-										<label>Frecuencia Cardiaca</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.frecue_cardia"
-											placeholder="Frecuencia cardiaca de la Mascota">
-										<div v-if="errors.frecue_cardia" class="invalid-feedback">{{ errors.frecue_cardia }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.fecing_hosp }">
-										<label>Fecha de Ingreso</label>
-										<input type="date"
-											class="form-control"
-											v-model="form.fecing_hosp"
-											placeholder="Fecha de Ingreso">
-										<div v-if="errors.fecing_hosp" class="invalid-feedback">{{ errors.fecing_hosp }}</div>
-									</div>
-								</div>
-							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.fecfin_hosp }">
-										<label>Fecha de Salida</label>
-										<input type="date"
-											class="form-control"
-											v-model="form.fecfin_hosp"
-											placeholder="Fecha de Salida">
-										<div v-if="errors.fecfin_hosp" class="invalid-feedback">{{ errors.fecfin_hosp }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.descrip_hosp }">
-										<label>Observaciones</label>
-										<textarea class="form-control" v-model="form.descrip_hosp" placeholder="Observaciones de la Mascota" rows="3"></textarea>
-										<div v-if="errors.descrip_hosp" class="invalid-feedback">{{ errors.descrip_hosp }}</div>
+							<div class="row">
+								<div class="col-md-12 py-4">
+									<div class="input-group input-group-static d-block"
+									:class="{ 'is-invalid': errors.img_exa }">
+									<label class="pb-1">Imágen del Examen</label>
+									<file-pond
+									name="test"
+									ref="pond"
+									class-name="my-pond"
+									accepted-file-types="image/jpeg, image/png"
+									maxFileSize="5MB"
+									v-bind:files="form.img_exa_recovered"
+									v-on:init="handleFilePondInit"/>
+										<div v-if="errors.img_exa" class="invalid-feedback">
+											{{ errors.img_exa }}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -140,7 +67,7 @@
 						<div class="card-footer">
 							<div class="row">
 								<div class="col-lg-8 col-12 actions text-end ms-auto">
-									<Link :href="route('hospitalizaciones.index')" class="btn btn-outline-dark mb-0">Cancelar</Link>
+									<Link :href="route('examenes.index')" class="btn btn-outline-dark mb-0">Cancelar</Link>
 									<button type="submit" class="btn bg-gradient-blue mb-0 ms-1" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Guardar</button>
 								</div>
 							</div>
@@ -155,32 +82,47 @@
 import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 
+// Import FilePond
+import vueFilePond, { setOptions } from 'vue-filepond';
+
+// Import plugins
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+
+// Import styles
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+// Create FilePond component
+const FilePond = vueFilePond( FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFileValidateSize );
+
+setOptions({
+	labelIdle: 'Soltar imagen aquí...',
+});
+
 export default {
 	components: {
 		AppLayout,
 		Link,
+		FilePond,
 	},
 
 	props: {
 		mascotas: Object,
-		hospitalizacion: Object,
+		examen: Object,
 		errors: Object
 	},
 
 	data() {
 		return {
 			form: useForm({
-				fecing_hosp: this.hospitalizacion.fecing_hosp,
-				fecfin_hosp: this.hospitalizacion.fecfin_hosp,
-				estado_hosp: this.hospitalizacion.estado_hosp,
-				descrip_hosp: this.hospitalizacion.descrip_hosp,
-				signologia: this.hospitalizacion.signologia,
-				temp_corp: this.hospitalizacion.temp_corp,
-				color_mucosa: this.hospitalizacion.color_mucosa,
-				palpa_abdominal: this.hospitalizacion.palpa_abdominal,
-				piel: this.hospitalizacion.piel,
-				frecue_cardia: this.hospitalizacion.frecue_cardia,
-				id_masc: this.hospitalizacion.id_masc,
+				_method: 'PUT',
+				titu_exa: this.examen.titu_exa,
+				img_exa: this.examen.img_exa,
+				img_exa_recovered: this.examen.img_exa,
+				descrip_exa: this.examen.descrip_exa,
+				id_masc: this.examen.id_masc,
 			}),
 		}
 	},
@@ -191,9 +133,18 @@ export default {
 
 	methods: {
 		submit() {
-            this.form.put(route('hospitalizaciones.update', this.hospitalizacion.ficha_hosp), {
+			if (this.$refs.pond.getFiles()[0] != undefined) {
+				if (this.$refs.pond.getFiles()[0].file instanceof File) {
+					this.form.img_exa = this.$refs.pond.getFiles()[0].file;
+				}
+			}
+            this.form.post(route('examenes.update', this.examen.id_exa), {
                 onSuccess: () => this.form.reset(),
             });
+        },
+
+        handleFilePondInit: function() {
+            this.$refs.pond.getFiles();
         },
 	}
 }

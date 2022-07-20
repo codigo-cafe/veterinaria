@@ -4980,8 +4980,8 @@ fieldset:disabled .btn {
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-  color: var(--bs-dark);
-  background-color: var(--bs-white);
+  color: var(--bs-white) !important;
+  background-color: #3A4E7A;
 }
 
 .nav-fill>.nav-link,
@@ -24366,7 +24366,6 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
   z-index: 3;
   color: var(--bs-dark);
   border-radius: 0.5rem;
-  background-color: inherit;
 }
 
 .nav.nav-pills .nav-link.active {

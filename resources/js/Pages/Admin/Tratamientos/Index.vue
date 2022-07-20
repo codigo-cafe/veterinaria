@@ -4,14 +4,14 @@
 			<div class="card">
 				<div class="card-header px-3 pb-0 pt-2">
 					<div class="icon icon-lg icon-shape bg-gradient-blue shadow-blue text-center border-radius-xl mt-n4">
-						<i class="fas fa-address-card"></i>
+						<i class="fas fa-capsules"></i>
 					</div>
 				</div>
 				<div class="card-body">
-					<h6 class="card-title text-dark text-gradient">Lista de Hospitalizaciones</h6>
+					<h6 class="card-title text-dark text-gradient">Lista de Tratamientos</h6>
 					<div class="d-flex justify-content-end">
-						<Link :href="route('hospitalizaciones.create')" class="btn btn-blue">
-							<i class="fas fa-plus"></i> Registrar Hospitalización
+						<Link :href="route('tratamientos.create')" class="btn btn-blue">
+							<i class="fas fa-plus"></i> Registrar Tratamiento
 						</Link>
 					</div>
 					<div class="row">
@@ -39,76 +39,50 @@
 							<thead class="thead-light">
 								<tr>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('ficha_hosp')" class="w-100 d-inline-flex justify-content-between text-secondary">#</a>
-										<i v-if="params.field ==='ficha_hosp' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
-										<i v-if="params.field ==='ficha_hosp' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
+										<a href="#" @click="sort('id_tra')" class="w-100 d-inline-flex justify-content-between text-secondary">#</a>
+										<i v-if="params.field ==='id_tra' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
+										<i v-if="params.field ==='id_tra' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('nom_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Nombre</a>
-										<i v-if="params.field ==='nom_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='nom_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+										<a href="#" @click="sort('nom_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Mascota</a>
+										<i v-if="params.field === 'nom_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field === 'nom_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
 										<a href="#" @click="sort('raza_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Raza</a>
-										<i v-if="params.field ==='raza_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='raza_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field === 'raza_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
+										<i v-if="params.field === 'raza_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
 									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('sexo_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Sexo</a>
-										<i v-if="params.field ==='sexo_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='sexo_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
-									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('color_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Color</a>
-										<i v-if="params.field ==='color_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='color_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
-									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('espe_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Especie</a>
-										<i v-if="params.field ==='espe_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='espe_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
-									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-										<a href="#" @click="sort('edad_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Edad</a>
-										<i v-if="params.field ==='edad_masc' && params.direction === 'asc'" class="fas fa-sort-down fa-lg" style="right: 4px;"></i>
-										<i v-if="params.field ==='edad_masc' && params.direction === 'desc'" class="fas fa-sort-up fa-lg" style="right: 4px;"></i>
-									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha Ingreso</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha Salida</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="hospitalizacion in hospitalizaciones.data" :key="hospitalizacion.ficha_hosp">
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.ficha_hosp }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.nom_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.raza_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.sexo_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.color_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.espe_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ hospitalizacion.mascota.edad_masc }}</td>
-									<td class="text-sm font-weight-normal">{{ fecha(hospitalizacion.fecing_hosp) }}</td>
-									<td class="text-sm font-weight-normal">{{ fecha(hospitalizacion.fecfin_hosp) }}</td>
+								<tr v-for="tratamiento in tratamientos.data" :key="tratamiento.id_tra">
+									<td class="text-sm font-weight-normal">{{ tratamiento.id_tra }}</td>
+									<td class="text-sm font-weight-normal">{{ tratamiento.mascota.nom_masc }}</td>
+									<td class="text-sm font-weight-normal">{{ tratamiento.mascota.raza_masc }}</td>
+									<td class="text-sm font-weight-normal">{{ fecha(tratamiento.fec_tra) }}</td>
 									<td class="text-sm">
 										<div class="d-flex justify-content-center align-items-center">
-											<Link :href="route('hospitalizaciones.show', hospitalizacion.ficha_hosp)" class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Mostrar">
+											<Link :href="route('tratamientos.show', tratamiento.id_tra)" class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Mostrar">
 												<i class="material-icons text-lg">visibility</i>
 											</Link>
-											<Link :href="route('hospitalizaciones.edit', hospitalizacion.ficha_hosp)" class="btn btn-icon-only btn-rounded btn-outline-warning mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Editar">
+											<Link :href="route('tratamientos.edit', tratamiento.id_tra)" class="btn btn-icon-only btn-rounded btn-outline-warning mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Editar">
 												<i class="material-icons text-lg">edit</i>
 											</Link>
-											<button type="button" @click="destroy(hospitalizacion)" class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
+											<button type="button" @click="destroy(tratamiento)" class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
 												<i class="material-icons text-lg">clear</i>
 											</button>
 										</div>
 									</td>
 								</tr>
-								<tr v-if="hospitalizaciones.data.length == 0">
+								<tr v-if="tratamientos.data.length == 0">
 									<td class="text-center" colspan="100%">No se encontraron resultados</td>
 								</tr>
 							</tbody>
 						</table>
-						<pagination class="mt-4 mb-2" :links="hospitalizaciones.links" :results="hospitalizaciones" />
+						<pagination class="mt-4 mb-2" :links="tratamientos.links" :results="tratamientos" />
 					</div>
 					<!--  end card  -->
 				</div>
@@ -135,7 +109,7 @@ export default {
 	},
 
 	props: {
-		hospitalizaciones: Object,
+		tratamientos: Object,
 		filters: Object,
 	},
 
@@ -144,14 +118,14 @@ export default {
 			params: {
 				entries: this.filters.entries != null ? this.filters.entries : 10,
 				search: this.filters.search != null ? this.filters.search : '',
-				field: this.filters.field != null ? this.filters.field : 'ficha_hosp',
+				field: this.filters.field != null ? this.filters.field : 'id_tra',
 				direction: this.filters.direction != null ? this.filters.direction : 'asc',
 			},
 			infomodal: {
 				id: null,
 				nombre: null,
-				mensaje: "Seguro de eliminar la hospitalización de la mascota: ",
-				url: "hospitalizaciones.destroy",
+				mensaje: "Seguro de eliminar el tratamiento de la mascota: ",
+				url: "tratamientos.destroy",
 			},
 		}
 	},
@@ -163,7 +137,7 @@ export default {
 	watch: {
 		params: {
 			handler() {
-				this.$inertia.get(this.route('hospitalizaciones.index'), this.params, { replace: true, preserveState: true });
+				this.$inertia.get(this.route('tratamientos.index'), this.params, { replace: true, preserveState: true });
 			},
 			deep: true,
 		},
@@ -175,9 +149,9 @@ export default {
 			this.params.direction = this.params.direction === 'asc' ? 'desc' : 'asc'
 		},
 
-		destroy(hospitalizacion){
-			this.infomodal.id = hospitalizacion.ficha_hosp;
-			this.infomodal.nombre = hospitalizacion.mascota.nom_masc;
+		destroy(tratamiento){
+			this.infomodal.id = tratamiento.id_tra;
+			this.infomodal.nombre = tratamiento.mascota.nom_masc;
 			var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
 			confirmModal.show()
 		},

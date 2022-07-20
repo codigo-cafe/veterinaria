@@ -1,187 +1,231 @@
-<script setup>
-import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
-import { Link, useForm } from '@inertiajs/inertia-vue3';
-import JetButton from '@/Jetstream/Button.vue';
-import JetFormSection from '@/Jetstream/FormSection.vue';
-import JetInput from '@/Jetstream/Input.vue';
-import JetInputError from '@/Jetstream/InputError.vue';
-import JetLabel from '@/Jetstream/Label.vue';
-import JetActionMessage from '@/Jetstream/ActionMessage.vue';
-import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
-
-const props = defineProps({
-    user: Object,
-});
-
-const form = useForm({
-    _method: 'PUT',
-    name: props.user.name,
-    email: props.user.email,
-    photo: null,
-});
-
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
-
-const updateProfileInformation = () => {
-    if (photoInput.value) {
-        form.photo = photoInput.value.files[0];
-    }
-
-    form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
-        preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
-    });
-};
-
-const sendEmailVerification = () => {
-    verificationLinkSent.value = true;
-};
-
-const selectNewPhoto = () => {
-    photoInput.value.click();
-};
-
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (! photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-const deletePhoto = () => {
-    Inertia.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            photoPreview.value = null;
-            clearPhotoFileInput();
-        },
-    });
-};
-
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
-};
-</script>
-
 <template>
-    <JetFormSection @submitted="updateProfileInformation">
-        <template #title>
-            Profile Information
-        </template>
-
-        <template #description>
-            Update your account's profile information and email address.
-        </template>
-
-        <template #form>
-            <!-- Profile Photo -->
-            <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
-                <input
-                    ref="photoInput"
-                    type="file"
-                    class="hidden"
-                    @change="updatePhotoPreview"
-                >
-
-                <JetLabel for="photo" value="Photo" />
-
-                <!-- Current Profile Photo -->
-                <div v-show="! photoPreview" class="mt-2">
-                    <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
-                </div>
-
-                <!-- New Profile Photo Preview -->
-                <div v-show="photoPreview" class="mt-2">
-                    <span
-                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                        :style="'background-image: url(\'' + photoPreview + '\');'"
-                    />
-                </div>
-
-                <JetSecondaryButton class="mt-2 mr-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
-                </JetSecondaryButton>
-
-                <JetSecondaryButton
-                    v-if="user.profile_photo_path"
-                    type="button"
-                    class="mt-2"
-                    @click.prevent="deletePhoto"
-                >
-                    Remove Photo
-                </JetSecondaryButton>
-
-                <JetInputError :message="form.errors.photo" class="mt-2" />
+    <form @submit.prevent="submit">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Actualizar Perfil</h5>
             </div>
-
-            <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="name" value="Name" />
-                <JetInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="name"
-                />
-                <JetInputError :message="form.errors.name" class="mt-2" />
-            </div>
-
-            <!-- Email -->
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="email" value="Email" />
-                <JetInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                />
-                <JetInputError :message="form.errors.email" class="mt-2" />
-
-                <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
-                    <p class="text-sm mt-2">
-                        Your email address is unverified.
-
-                        <Link
-                            :href="route('verification.send')"
-                            method="post"
-                            as="button"
-                            class="underline text-gray-600 hover:text-gray-900"
-                            @click.prevent="sendEmailVerification"
-                        >
-                            Click here to re-send the verification email.
-                        </Link>
-                    </p>
-
-                    <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600">
-                        A new verification link has been sent to your email address.
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.cedula_per }">
+                            <label>Cédula</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.cedula_per"
+                                placeholder="Cédula de Identidad"
+                                autofocus>
+                            <div v-if="errors.cedula_per" class="invalid-feedback">{{ errors.cedula_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.nom_per }">
+                            <label>Nombre</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.nom_per"
+                                placeholder="Nombre del Usuario">
+                            <div v-if="errors.nom_per" class="invalid-feedback">{{ errors.nom_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.ape_per }">
+                            <label>Apellidos</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.ape_per"
+                                placeholder="Apellidos del Usuario">
+                            <div v-if="errors.ape_per" class="invalid-feedback">{{ errors.ape_per }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.correo_per }">
+                            <label>Correo</label>
+                            <input type="email"
+                                class="form-control"
+                                v-model="form.correo_per"
+                                placeholder="Correo Electrónico">
+                            <div v-if="errors.correo_per" class="invalid-feedback">{{ errors.correo_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.dir_per }">
+                            <label>Dirección</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.dir_per"
+                                placeholder="Dirección del Usuario">
+                            <div v-if="errors.dir_per" class="invalid-feedback">{{ errors.dir_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.celular_per }">
+                            <label>Celular</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.celular_per"
+                                placeholder="Número Telefónico">
+                            <div v-if="errors.celular_per" class="invalid-feedback">{{ errors.celular_per }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.cargo_per }">
+                            <label for="cargo" class="ms-0">Cargo</label>
+                            <select v-model="form.cargo_per" class="form-control" id="cargo">
+                                <option value="">Seleccione un Cargo</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Doctor">Doctor</option>
+                            </select>
+                            <div v-if="errors.cargo_per" class="invalid-feedback">{{ errors.cargo_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.profe_per }">
+                            <label>Profesión</label>
+                            <input type="text"
+                                class="form-control"
+                                v-model="form.profe_per"
+                                placeholder="Profesión del Usuario">
+                            <div v-if="errors.profe_per" class="invalid-feedback">{{ errors.profe_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.fecnac_per }">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date"
+                                class="form-control"
+                                v-model="form.fecnac_per"
+                                placeholder="Fecha de Nacimiento"
+                                :max="limitmax"
+                                @change="changedate">
+                            <div v-if="errors.fecnac_per" class="invalid-feedback">{{ errors.fecnac_per }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.edad_per }">
+                            <label>Edad</label>
+                            <input type="number"
+                                class="form-control"
+                                v-model="form.edad_per"
+                                placeholder="Edad del Usuario">
+                            <div v-if="errors.edad_per" class="invalid-feedback">{{ errors.edad_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.sexo_per }">
+                            <label for="sexo" class="ms-0">Sexo</label>
+                            <select v-model="form.sexo_per" class="form-control" id="sexo">
+                                <option value="">Seleccione un Sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                            <div v-if="errors.sexo_per" class="invalid-feedback">{{ errors.sexo_per }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.fecinicio_per }">
+                            <label>Fecha de Ingreso</label>
+                            <input type="date"
+                                class="form-control"
+                                v-model="form.fecinicio_per"
+                                placeholder="Fecha de Ingreso">
+                            <div v-if="errors.fecinicio_per" class="invalid-feedback">{{ errors.fecinicio_per }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': errors.fecfinal_per }">
+                            <label>Fecha de Terminación Laboral</label>
+                            <input type="date"
+                                class="form-control"
+                                v-model="form.fecfinal_per"
+                                placeholder="Fecha de Terminación Laboral">
+                            <div v-if="errors.fecfinal_per" class="invalid-feedback">{{ errors.fecfinal_per }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12 col-12 actions text-end ms-auto">
+                        <button type="submit" class="btn bg-gradient-blue mb-0 ms-1">Actualizar Perfil</button>
                     </div>
                 </div>
             </div>
-        </template>
-
-        <template #actions>
-            <JetActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </JetActionMessage>
-
-            <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
-            </JetButton>
-        </template>
-    </JetFormSection>
+        </div>
+    </form>
 </template>
+
+<script>
+import { Link, useForm } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
+
+export default {
+    components: {
+        Link,
+    },
+
+    props: {
+        usuario: Object,
+        errors: Object
+    },
+
+    data() {
+        return {
+            form: useForm({
+                cedula_per: this.usuario.cedula_per,
+                nom_per: this.usuario.nom_per,
+                ape_per: this.usuario.ape_per,
+                dir_per: this.usuario.dir_per,
+                celular_per: this.usuario.celular_per,
+                correo_per: this.usuario.correo_per,
+                cargo_per: this.usuario.cargo_per,
+                profe_per: this.usuario.profe_per,
+                fecnac_per: this.usuario.fecnac_per,
+                edad_per: this.usuario.edad_per,
+                sexo_per: this.usuario.sexo_per,
+                fecinicio_per: this.usuario.fecinicio_per,
+                fecfinal_per: this.usuario.fecfinal_per,
+            }),
+            limitmax: null,
+        }
+    },
+
+    mounted(){
+        this.limitmax = moment().subtract(18, 'years').format('YYYY-MM-DD');
+    },
+
+    methods: {
+        submit() {
+            this.form.put(route('user-profile-information.update'), {
+                errorBag: 'updateProfileInformation',
+                preserveScroll: true,
+                onSuccess: () => {
+                    console.log(this.$page.props.flash.status)
+                },
+            });
+        },
+
+        changedate() {
+            this.form.edad_per = moment().diff(this.form.fecnac_per, 'years');
+        }
+    }
+}
+</script>

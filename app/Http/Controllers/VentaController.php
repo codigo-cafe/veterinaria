@@ -91,7 +91,9 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        //
+        return Inertia::render('Admin/Ventas/Show', [
+            'venta' => $venta->load(['productos', 'cliente']),
+        ]);
     }
 
     /**
@@ -102,7 +104,11 @@ class VentaController extends Controller
      */
     public function edit(Venta $venta)
     {
-        //
+        return Inertia::render('Admin/Ventas/Edit', [
+            'productos' => Producto::all(),
+            'clientes' => Cliente::all(),
+            'venta' => $venta->load('productos'),
+        ]);
     }
 
     /**
@@ -112,9 +118,23 @@ class VentaController extends Controller
      * @param  \App\Models\Venta  $venta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Venta $venta)
+    public function update(VentaRequest $request, Venta $venta)
     {
-        //
+        $venta->update($request->all());
+        $venta->productos()->detach();
+
+        foreach ($request->productos as $key => $producto)
+        {
+            DB::table('producto_venta')->insert(
+                [
+                    'id_pro' => $producto['id_pro'],
+                    'id_ven' => $venta->id_ven,
+                    'cant_ven' => $producto['cantidad'],
+                    'precio_pro' => $producto['precio_pro'],
+                ]
+            );
+        }
+        return redirect()->route('ventas.index')->with('status', 'Venta modificada correctamente.');
     }
 
     /**
@@ -125,6 +145,8 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        //
+        $venta->productos()->detach();
+        $venta->delete();
+        return redirect()->route('ventas.index')->with('status', 'Venta eliminada correctamente.');
     }
 }

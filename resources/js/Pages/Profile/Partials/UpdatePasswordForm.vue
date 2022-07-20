@@ -1,100 +1,89 @@
-<script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import JetActionMessage from '@/Jetstream/ActionMessage.vue';
-import JetButton from '@/Jetstream/Button.vue';
-import JetFormSection from '@/Jetstream/FormSection.vue';
-import JetInput from '@/Jetstream/Input.vue';
-import JetInputError from '@/Jetstream/InputError.vue';
-import JetLabel from '@/Jetstream/Label.vue';
+<template>
+    <form @submit.prevent="submit">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Cambiar Contraseña</h5>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': form.errors.current_password }">
+                            <label>Contraseña Actual</label>
+                            <input type="password"
+                                class="form-control"
+                                v-model="form.current_password"
+                                placeholder="Contraseña Actual"
+                                autofocus>
+                            <div v-if="form.errors.current_password" class="invalid-feedback">{{ form.errors.current_password }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': form.errors.password }">
+                            <label>Nueva Contraseña</label>
+                            <input type="password"
+                                class="form-control"
+                                v-model="form.password"
+                                placeholder="Nueva Contraseña">
+                            <div v-if="form.errors.password" class="invalid-feedback">{{ form.errors.password }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <div class="input-group input-group-static"
+                            :class="{ 'is-invalid': form.errors.password_confirmation }">
+                            <label>Confirmar Contraseña</label>
+                            <input type="password"
+                                class="form-control"
+                                v-model="form.password_confirmation"
+                                placeholder="Confirmar Contraseña">
+                            <div v-if="form.errors.password_confirmation" class="invalid-feedback">{{ form.errors.password_confirmation }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12 col-12 actions text-end ms-auto">
+                        <button type="submit" class="btn bg-gradient-blue mb-0 ms-1">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>
 
-const passwordInput = ref(null);
-const currentPasswordInput = ref(null);
-
-const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const updatePassword = () => {
-    form.put(route('user-password.update'), {
-        errorBag: 'updatePassword',
-        preserveScroll: true,
-        onSuccess: () => form.reset(),
-        onError: () => {
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
-            }
-
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
+<script>
+    export default {
+        data() {
+            return {
+                form: this.$inertia.form({
+                    current_password: '',
+                    password: '',
+                    password_confirmation: '',
+                }),
             }
         },
-    });
-};
+
+        methods: {
+            submit() {
+                this.form.put(route('user-password.update'), {
+                    errorBag: 'updatePassword',
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        this.form.reset()
+                    },
+                    onError: () => {
+                        if (this.form.errors.password) {
+                            this.form.reset('password', 'password_confirmation')
+                            this.$refs.password.focus()
+                        }
+
+                        if (this.form.errors.current_password) {
+                            this.form.reset('current_password')
+                            this.$refs.current_password.focus()
+                        }
+                    }
+                })
+            },
+        },
+    }
 </script>
-
-<template>
-    <JetFormSection @submitted="updatePassword">
-        <template #title>
-            Update Password
-        </template>
-
-        <template #description>
-            Ensure your account is using a long, random password to stay secure.
-        </template>
-
-        <template #form>
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="current_password" value="Current Password" />
-                <JetInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
-                <JetInputError :message="form.errors.current_password" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="password" value="New Password" />
-                <JetInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-                <JetInputError :message="form.errors.password" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="password_confirmation" value="Confirm Password" />
-                <JetInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-                <JetInputError :message="form.errors.password_confirmation" class="mt-2" />
-            </div>
-        </template>
-
-        <template #actions>
-            <JetActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </JetActionMessage>
-
-            <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
-            </JetButton>
-        </template>
-    </JetFormSection>
-</template>

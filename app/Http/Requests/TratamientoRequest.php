@@ -24,11 +24,16 @@ class TratamientoRequest extends FormRequest
     public function rules()
     {
         return [
-            'tiempo_tra' => 'required',
-            'dosis_tra' => 'required',
-            'fecing_tra' => 'required',
-            'fecfin_tra' => 'required',
+            'productos' => 'required',
             'id_masc' => 'required',
+        ];
+    }
+
+    public function messages($value='')
+    {
+        return [
+            'productos.required' => 'Se requiere que haya agregado al menos un producto al tratamiento.',
+            'id_masc.required' => 'El campo mascota es obligatorio.',
         ];
     }
 }

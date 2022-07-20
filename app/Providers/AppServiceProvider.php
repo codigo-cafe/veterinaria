@@ -26,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Inertia::share('flash', function () {
+            if (Session::get('status') === 'profile-information-updated') {
+                return ['status' => 'Perfil actualizado correctamente.'];
+            }
+            if (Session::get('status') === 'password-updated') {
+                return ['status' => 'Contraseña actualizada correctamente.'];
+            }
             return ['status' => Session::get('status')];
         });
     }

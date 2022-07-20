@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Atencion;
+use App\Models\Cita;
 use App\Models\Cliente;
+use App\Models\Examen;
+use App\Models\Hospitalizacion;
 use App\Models\Imagen;
+use App\Models\Tratamiento;
+use App\Models\Vacuna;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Mascota extends Model
 {
@@ -38,5 +44,35 @@ class Mascota extends Model
     public function imagenes()
     {
         return $this->hasMany(Imagen::class, 'id_masc');
+    }
+
+    public function citas()
+    {
+        return $this->hasMany(Cita::class, 'id_masc');
+    }
+
+    public function vacunas()
+    {
+        return $this->hasMany(Vacuna::class, 'id_masc');
+    }
+
+    public function examenes()
+    {
+        return $this->hasMany(Examen::class, 'id_masc');
+    }
+
+    public function hospitalizaciones()
+    {
+        return $this->hasMany(Hospitalizacion::class, 'id_masc');
+    }
+
+    public function tratamientos()
+    {
+        return $this->hasMany(Tratamiento::class, 'id_masc');
+    }
+
+    public function Atenciones()
+    {
+        return $this->hasMany(Atencion::class, 'id_masc');
     }
 }

@@ -5,9 +5,9 @@
 				<div class="card position-sticky top-1">
 					<ul class="nav flex-column bg-white border-radius-lg p-3">
 						<li class="nav-item">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#hospitalizacion">
-								<i class="fas fa-briefcase-medical me-2"></i>
-								<span class="text-sm">Hospitalización</span>
+							<a class="nav-link text-dark d-flex" data-scroll="" href="#examen">
+								<i class="fas fa-heartbeat me-2"></i>
+								<span class="text-sm">Examen</span>
 							</a>
 						</li>
 						<li class="nav-item pt-2">
@@ -44,78 +44,30 @@
 				</div>
 			</div>
 			<div class="col-lg-9 mt-lg-0 mt-4">
-				<div class="card card-body" id="hospitalizacion">
+				<div class="card card-body" id="examen">
 					<div class="card-header">
-						<h5 class="mb-0">Hospitalización</h5>
+						<h5 class="mb-0">Examen</h5>
 					</div>
 					<div class="card-body pt-0">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
-									<label>Temperatura de la Mascota</label>
-									<input type="text" class="form-control" :value="hospitalizacion.temp_corp" disabled>
+									<label>Título del Examen</label>
+									<input type="text" class="form-control" :value="examen.titu_exa" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
-									<label>Salud de la Mascota</label>
-									<input type="text" class="form-control" :value="hospitalizacion.estado_hosp" disabled>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Signos del Paciente</label>
-									<input type="text" class="form-control" :value="hospitalizacion.signologia" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Mucosa</label>
-									<input type="text" class="form-control" :value="hospitalizacion.color_mucosa" disabled>
+									<label>Descripción del Examen</label>
+									<input type="text" class="form-control" :value="examen.descrip_exa" disabled>
 								</div>
 							</div>
 						</div>
 						<div class="row mt-4">
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
-									<label>Palpa Abdominal</label>
-									<input type="text" class="form-control" :value="hospitalizacion.palpa_abdominal" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Piel</label>
-									<input type="text" class="form-control" :value="hospitalizacion.piel" disabled>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Frecuencia Cardiaca</label>
-									<input type="text" class="form-control" :value="hospitalizacion.frecue_cardia" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Fecha de Ingreso</label>
-									<input type="text" class="form-control" :value="fecing_hosp" disabled>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Fecha de Salida</label>
-									<input type="text" class="form-control" :value="fecfin_hosp" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Observaciones</label>
-									<textarea class="form-control" :value="hospitalizacion.descrip_hosp" rows="3" disabled></textarea>
+									<label class="pb-1">Imagen del Examen</label>
+									<img :src="examen.img_exa" alt="">
 								</div>
 							</div>
 						</div>
@@ -126,16 +78,16 @@
 					<div class="row justify-content-center align-items-center">
 						<div class="col-sm-auto col-4">
 							<div class="avatar avatar-xl position-relative">
-								<img :src="hospitalizacion.mascota.cliente.sexo_masc === 'Masculino' ? '/img/man.png' : '/img/woman.png'" alt="bruce" class="w-100 rounded-circle shadow-sm">
+								<img :src="examen.mascota.cliente.sexo_masc === 'Masculino' ? '/img/man.png' : '/img/woman.png'" alt="bruce" class="w-100 rounded-circle shadow-sm">
 							</div>
 						</div>
 						<div class="col-sm-auto col-8 my-auto">
 							<div class="h-100">
 								<h5 class="mb-1 font-weight-bolder">
-									{{ hospitalizacion.mascota.cliente.nom_clie }} {{ hospitalizacion.mascota.cliente.ape_clie }}
+									{{ examen.mascota.cliente.nom_clie }} {{ examen.mascota.cliente.ape_clie }}
 								</h5>
 								<p class="mb-0 font-weight-normal text-sm">
-									{{ hospitalizacion.mascota.cliente.correo_clie }}
+									{{ examen.mascota.cliente.correo_clie }}
 								</p>
 							</div>
 						</div>
@@ -154,13 +106,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Nombre</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.nom_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.nom_masc" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Raza</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.raza_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.raza_masc" disabled>
 								</div>
 							</div>
 						</div>
@@ -168,13 +120,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Especie</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.espe_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.espe_masc" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Color</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.color_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.color_masc" disabled>
 								</div>
 							</div>
 						</div>
@@ -182,13 +134,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Pelaje</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.pelaje_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.pelaje_masc" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Sexo</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.sexo_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.sexo_masc" disabled>
 								</div>
 							</div>
 						</div>
@@ -202,7 +154,7 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Edad</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.edad_masc + ' años' " disabled>
+									<input type="text" class="form-control" :value="examen.mascota.edad_masc + ' años' " disabled>
 								</div>
 							</div>
 						</div>
@@ -218,13 +170,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Nombre</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.nom_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.nom_clie" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Apellidos</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.ape_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.ape_clie" disabled>
 								</div>
 							</div>
 						</div>
@@ -232,13 +184,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Cédula</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.cedula_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.cedula_clie" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Ocupación</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.ocupacion_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.ocupacion_clie" disabled>
 								</div>
 							</div>
 						</div>
@@ -246,13 +198,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Edad</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.edad_clie + ' años'" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.edad_clie + ' años'" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Sexo</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.sexo_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.sexo_clie" disabled>
 								</div>
 							</div>
 						</div>
@@ -268,7 +220,7 @@
 							<div class="col-12">
 								<div class="input-group input-group-static">
 									<label>Vivienda</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.vivienda_masc" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.vivienda_masc" disabled>
 								</div>
 							</div>
 						</div>
@@ -284,13 +236,13 @@
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Celular</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.celular_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.celular_clie" disabled>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-static">
 									<label>Correo Electrónico</label>
-									<input type="text" class="form-control" :value="hospitalizacion.mascota.cliente.correo_clie" disabled>
+									<input type="text" class="form-control" :value="examen.mascota.cliente.correo_clie" disabled>
 								</div>
 							</div>
 						</div>
@@ -304,7 +256,7 @@
 					<div class="card-body pt-0">
 						<div class="row d-flex justify-content-center">
 							<div class="col-md-12">
-								<div v-if="hospitalizacion.mascota.imagenes.length === 0" class="alert alert-secondary alert-dismissible fade show mb-4 text-white" role="alert">
+								<div v-if="examen.mascota.imagenes.length === 0" class="alert alert-secondary alert-dismissible fade show mb-4 text-white" role="alert">
 									<span class="alert-icon me-2"><i class="fas fa-bell"></i></span>
 									<span class="alert-text"><strong>Mensaje:</strong> Esta mascota aún no cuenta con imágenes.</span>
 									<button type="button" class="btn-close d-flex justify-content-center align-items-center" data-bs-dismiss="alert" aria-label="Close">
@@ -315,11 +267,11 @@
 							<div class="col-md-9">
 								<div id="carouselImagenesMascota" class="carousel slide" data-bs-ride="carousel">
 									<div class="carousel-indicators">
-										<button type="button" data-bs-target="#carouselImagenesMascota" :data-bs-slide-to="index" :class="{ 'active' : index === 0 }" :aria-current="{ true : index === 0 }" aria-label="Imagen" v-for="(imagen, index) in hospitalizacion.mascota.imagenes" :key="imagen.id_img"></button>
+										<button type="button" data-bs-target="#carouselImagenesMascota" :data-bs-slide-to="index" :class="{ 'active' : index === 0 }" :aria-current="{ true : index === 0 }" aria-label="Imagen" v-for="(imagen, index) in examen.mascota.imagenes" :key="imagen.id_img"></button>
 									</div>
 									<div class="carousel-inner">
-										<div class="carousel-item" :class="{ 'active' : index === 0 }" v-for="(imagen, index) in hospitalizacion.mascota.imagenes" :key="imagen.id_img">
-											<img :src="imagen.url_img" class="d-block w-100 carousel-cover" alt="hospitalizacion.mascota.nom_masc">
+										<div class="carousel-item" :class="{ 'active' : index === 0 }" v-for="(imagen, index) in examen.mascota.imagenes" :key="imagen.id_img">
+											<img :src="imagen.url_img" class="d-block w-100 carousel-cover" alt="examen.mascota.nom_masc">
 										</div>
 									</div>
 									<button class="carousel-control-prev" type="button" data-bs-target="#carouselImagenesMascota" data-bs-slide="prev">
@@ -335,8 +287,8 @@
 						</div>
 						<div class="row mt-5">
 							<div class="col-lg-12 col-12 actions text-end ms-auto">
-								<Link :href="route('hospitalizaciones.index')" class="btn btn-outline-dark mb-0">Volver</Link>
-								<Link :href="route('hospitalizaciones.edit', hospitalizacion.ficha_hosp)" class="btn bg-gradient-blue mb-0 ms-1">Editar</Link>
+								<Link :href="route('examenes.index')" class="btn btn-outline-dark mb-0">Volver</Link>
+								<Link :href="route('examenes.edit', examen.id_exa)" class="btn bg-gradient-blue mb-0 ms-1">Editar</Link>
 							</div>
 						</div>
 					</div>
@@ -356,14 +308,14 @@ export default {
 		Link,
 	},
 	props: {
-		'hospitalizacion': Object
+		'examen': Object
 	},
 
 	data() {
 		return {
-			fecnac_masc: moment(this.hospitalizacion.mascota.fecnac_masc).format('DD/MM/YYYY'),
-			fecing_hosp: moment(this.hospitalizacion.fecing_hosp).format('DD/MM/YYYY'),
-			fecfin_hosp: moment(this.hospitalizacion.fecfin_hosp).format('DD/MM/YYYY'),
+			fecnac_masc: moment(this.examen.mascota.fecnac_masc).format('DD/MM/YYYY'),
+			fecing_hosp: moment(this.examen.fecing_hosp).format('DD/MM/YYYY'),
+			fecfin_hosp: moment(this.examen.fecfin_hosp).format('DD/MM/YYYY'),
 		}
 	}
 }

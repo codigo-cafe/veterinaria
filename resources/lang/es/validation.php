@@ -211,6 +211,21 @@ return [
         'palpa_abdominal' => 'palpa abdominal',
         'piel' => 'piel',
         'frecue_cardia' => 'frecuencia cardiaca',
+
+        'titu_exa' => 'título',
+        'img_exa' => 'imagen del examen',
+        'descrip_exa' => 'descripción',
+
+        'tipo_cita' => 'tipo de cita',
+        'fec_cita' => 'fecha de cita',
+
+        'nom_vac' => 'nombre',
+        'dosis_vac' => 'dosis',
+        'fecapl_vac' => 'fecha de aplicación',
+        'fecprox_vac' => 'fecha proxima',
+
+        'current_password' => 'contraseña actual',
+        'current_password' => 'contraseña actual',
     ],
 
 ];

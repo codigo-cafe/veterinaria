@@ -1,17 +1,28 @@
 <?php
 
 use App\Http\Controllers\AtencionController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ExamenController;
+use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HospitalizacionController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TratamientoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VacunaController;
 use App\Http\Controllers\VentaController;
+use App\Models\Atencion;
+use App\Models\Cita;
 use App\Models\Cliente;
+use App\Models\Examen;
+use App\Models\Hospitalizacion;
 use App\Models\Mascota;
+use App\Models\Producto;
+use App\Models\Tratamiento;
 use App\Models\User;
+use App\Models\Vacuna;
+use App\Models\Venta;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,6 +56,16 @@ Route::middleware([
         return Inertia::render('Admin/Dashboard', [
             'usuarios' => User::all()->count(),
             'clientes' => Cliente::all()->count(),
+            'mascotas' => Mascota::all()->count(),
+            'productos' => Producto::all()->count(),
+            'ventas' => Venta::all()->count(),
+            'atencion' => Atencion::all()->count(),
+            'hospitalizacion' => Hospitalizacion::all()->count(),
+            'examenes' => Examen::all()->count(),
+            'tratamientos' => Tratamiento::all()->count(),
+            'historias' => Mascota::all()->count(),
+            'citas' => Cita::all()->count(),
+            'vacunacion' => Vacuna::all()->count(),
         ]);
     })->name('dashboard');
 
@@ -136,5 +157,30 @@ Route::middleware([
         'edit' => 'tratamientos.edit',
         'update' => 'tratamientos.update',
         'destroy' => 'tratamientos.destroy',
+    ]);
+
+    Route::resource('citas', CitaController::class)->names([
+        'index' => 'citas.index',
+        'create' => 'citas.create',
+        'store' => 'citas.store',
+        'show' => 'citas.show',
+        'edit' => 'citas.edit',
+        'update' => 'citas.update',
+        'destroy' => 'citas.destroy',
+    ]);
+
+    Route::resource('vacunas', VacunaController::class)->names([
+        'index' => 'vacunas.index',
+        'create' => 'vacunas.create',
+        'store' => 'vacunas.store',
+        'show' => 'vacunas.show',
+        'edit' => 'vacunas.edit',
+        'update' => 'vacunas.update',
+        'destroy' => 'vacunas.destroy',
+    ]);
+
+    Route::resource('historias', HistorialController::class)->except(['edit', 'update', 'store', 'create', 'destroy'])->names([
+        'index' => 'historias.index',
+        'show' => 'historias.show',
     ]);
 });

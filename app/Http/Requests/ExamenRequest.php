@@ -23,17 +23,23 @@ class ExamenRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'examenes' => 'required',
+        $rules = [
+            'titu_exa' => 'required',
+            'descrip_exa' => 'required',
             'id_masc' => 'required',
         ];
+        if($this->method() === 'POST'){
+            $rules['img_exa'] = 'required|mimes:jpg,jpeg,png,bmp|max:5120';
+        }
+        return $rules;
     }
 
     public function messages($value='')
     {
         return [
-            'examenes.required' => 'Se requiere que haya agregado al menos un examen a su lista de examenes',
-            'id_masc.required' => 'El campo mascota es obligatorio.',
+            'img_exa.*.required' => 'Sube al menos una imagen',
+            'img_exa.*.mimes' => 'Solo se permiten imágenes jpeg, png, jpg y bmp',
+            'img_exa.*.max' => '¡Lo siento! El tamaño máximo permitido para una imagen es de 5 MB.',
         ];
     }
 }

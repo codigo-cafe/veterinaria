@@ -1,165 +1,93 @@
 <template>
 	<app-layout>
 		<div class="row mb-5">
-			<div class="col-lg-3">
-				<div class="card position-sticky top-1">
-					<ul class="nav flex-column bg-white border-radius-lg p-3">
-						<li class="nav-item">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#perfil">
-								<i class="material-icons text-lg me-2">person</i>
-								<span class="text-sm">Perfil</span>
-							</a>
-						</li>
-						<li class="nav-item pt-2">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#direccion">
-								<i class="material-icons text-lg me-2">location_on</i>
-								<span class="text-sm">Dirección</span>
-							</a>
-						</li>
-						<li class="nav-item pt-2">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#contacto">
-								<i class="material-icons text-lg me-2">phone</i>
-								<span class="text-sm">Contacto</span>
-							</a>
-						</li>
-						<li class="nav-item pt-2">
-							<a class="nav-link text-dark d-flex" data-scroll="" href="#ocupacion">
-								<i class="material-icons text-lg me-2">workspace_premium</i>
-								<span class="text-sm">Ocupación</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-lg-9 mt-lg-0 mt-4">
+			<div class="col-lg-9 mt-lg-0 mt-4 mx-auto">
 				<div class="card card-body" id="perfil">
 					<div class="row justify-content-center align-items-center">
 						<div class="col-sm-auto col-4">
 							<div class="avatar avatar-xl position-relative">
-								<img :src="cliente.sexo_clie === 'Masculino' ? '/img/man.png' : '/img/woman.png'" alt="bruce" class="w-100 rounded-circle shadow-sm">
+								<img src="/img/logo.png" alt="cliente" class="w-100 rounded-circle shadow-sm">
 							</div>
 						</div>
 						<div class="col-sm-auto col-8 my-auto">
 							<div class="h-100">
 								<h5 class="mb-1 font-weight-bolder">
-									{{ cliente.nom_clie }} {{ cliente.ape_clie }}
+									Veterinaria
 								</h5>
 								<p class="mb-0 font-weight-normal text-sm">
-									{{ cliente.correo_clie }}
+									{{ $page.props.user.correo_per }}
 								</p>
 							</div>
 						</div>
 						<div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex">
-							<span class="badge badge-success ms-auto mb-auto">Estado</span>
-						</div>
-					</div>
-				</div>
-
-				<div class="card mt-4">
-					<div class="card-header">
-						<h5 class="mb-0">Perfil</h5>
-					</div>
-					<div class="card-body pt-0">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Nombre</label>
-									<input type="text" class="form-control" :value="cliente.nom_clie" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Apellidos</label>
-									<input type="text" class="form-control" :value="cliente.ape_clie" disabled>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Cédula</label>
-									<input type="text" class="form-control" :value="cliente.cedula_clie" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Ocupación</label>
-									<input type="text" class="form-control" :value="cliente.ocupacion_clie" disabled>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Edad</label>
-									<input type="text" class="form-control" :value="cliente.edad_clie + ' años'" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Sexo</label>
-									<input type="text" class="form-control" :value="cliente.sexo_clie" disabled>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="card mt-4" id="direccion">
-					<div class="card-header">
-						<h5 class="mb-0">Dirección</h5>
-					</div>
-					<div class="card-body pt-0">
-						<div class="row">
-							<div class="col-12">
-								<div class="input-group input-group-static">
-									<label>Dirección</label>
-									<input type="text" class="form-control" :value="cliente.direccion_clie" disabled>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="card mt-4" id="contacto">
-					<div class="card-header">
-						<h5 class="mb-0">Contacto</h5>
-					</div>
-					<div class="card-body pt-0">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Celular</label>
-									<input type="text" class="form-control" :value="cliente.celular_clie" disabled>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Correo Electrónico</label>
-									<input type="text" class="form-control" :value="cliente.correo_clie" disabled>
-								</div>
-							</div>
+							<span class="badge badge-success ms-auto mb-auto">{{ $page.props.user.cargo_per }}</span>
 						</div>
 					</div>
 				</div>
 
 				<div class="card mt-4" id="ocupacion">
-					<div class="card-header d-flex">
-						<h5 class="mb-0">Ocupación</h5>
+					<div class="card-header d-block">
+						<h5 class="mb-0">Recibo de Venta</h5>
+						<p class="text-sm my-2 text-dark">venta realizada el {{ fecha(venta.fec_ven) }}</p>
 					</div>
 					<div class="card-body pt-0">
 						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group input-group-static">
-									<label>Ocupación</label>
-									<input type="text" class="form-control" :value="cliente.ocupacion_clie" disabled>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="d-flex">
+									<div>
+										<img :src="venta.cliente.sexo_clie === 'Masculino' ? '/img/man.png' : '/img/woman.png'" class="avatar avatar-xxl me-3" alt="product image">
+									</div>
+									<div>
+										<h6 class="text-lg mb-0 mt-2">Datos del Cliente</h6>
+										<p class="text-sm my-2"> <strong>Cliente: </strong> {{ venta.cliente.nom_clie + ' ' + venta.cliente.ape_clie }}</p>
+										<p class="text-sm my-2"> <strong>Dirección: </strong> {{ venta.cliente.direccion_clie }}</p>
+										<span class="badge badge-sm bg-gradient-success">{{ venta.cliente.ocupacion_clie }}</span>
+									</div>
 								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12 my-auto text-end">
+								<h6 class="text-lg mb-0 mt-2">Detalles</h6>
+								<p class="text-sm my-2"> <strong>Cédula: </strong> {{ venta.cliente.cedula_clie }}</p>
+								<p class="text-sm my-2"> <strong>Correo: </strong> {{ venta.cliente.correo_clie }}</p>
+								<p class="text-sm my-2"> <strong>Celular: </strong> {{ venta.cliente.celular_clie }}</p>
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="table-responsive">
+								<table class="table align-items-center mb-4" id="datatable">
+									<thead class="thead-light">
+										<tr>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Id</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre Producto</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Cantidad</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Precio Unitario</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Precio Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="producto in venta.productos" :key="producto.id_pro">
+											<td class="text-sm font-weight-normal">{{ producto.id_pro }}</td>
+											<td class="text-sm font-weight-normal">{{ producto.nom_pro }}</td>
+											<td class="text-sm font-weight-normal">{{ producto.pivot.cant_ven }}</td>
+											<td class="text-sm font-weight-normal">{{ producto.pivot.precio_pro }}</td>
+											<td class="text-sm font-weight-normal">{{ decimales(producto.pivot.cant_ven * producto.pivot.precio_pro) }}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="4" class="text-sm font-weight-bolder text-end">Total</td>
+											<td class="text-sm">
+												{{ venta.total_ven }} COP
+											</td>
+										</tr>
+									</tfoot>
+								</table>
 							</div>
 						</div>
 						<div class="row mt-5">
 							<div class="col-lg-8 col-12 actions text-end ms-auto">
-								<Link :href="route('clientes.index')" class="btn btn-outline-dark mb-0">Volver</Link>
-								<Link :href="route('clientes.edit', cliente.id_clie)" class="btn bg-gradient-blue mb-0 ms-1">Editar</Link>
+								<Link :href="route('ventas.index')" class="btn btn-outline-dark mb-0">Volver</Link>
+								<Link :href="route('ventas.edit', venta.id_ven)" class="btn bg-gradient-blue mb-0 ms-1">Editar</Link>
 							</div>
 						</div>
 					</div>
@@ -171,14 +99,34 @@
 <script>
 import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
 
 export default {
 	components: {
 		AppLayout,
 		Link,
 	},
+
 	props: {
-		'cliente': Object
+		'venta': Object
 	},
+
+	methods: {
+		fecha: function (date) {
+			if (date) {
+				return moment(date).format('DD/MM/YYYY');
+			} else {
+				return '';
+			}
+		},
+
+		decimales: function (total) {
+			if (total) {
+				return Number(total).toFixed(2);
+			} else {
+				return '';
+			}
+		},
+	}
 }
 </script>

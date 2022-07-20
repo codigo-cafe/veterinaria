@@ -4,7 +4,7 @@
 			<div class="card">
 				<div class="card-header px-3 pb-0 pt-2">
 					<div class="icon icon-lg icon-shape bg-gradient-blue shadow-blue text-center border-radius-xl mt-n4">
-						<i class="fas fa-address-card"></i>
+						<i class="fas fa-paw"></i>
 					</div>
 				</div>
 				<div class="card-body">

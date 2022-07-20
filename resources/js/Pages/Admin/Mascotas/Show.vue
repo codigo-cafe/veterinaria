@@ -42,7 +42,7 @@
 					<div class="row justify-content-center align-items-center">
 						<div class="col-sm-auto col-4">
 							<div class="avatar avatar-xl position-relative">
-								<img :src="mascota.cliente.sexo_masc === 'Masculino' ? '/img/man.png' : '/img/woman.png'" alt="bruce" class="w-100 rounded-circle shadow-sm">
+								<img :src="mascota.cliente.sexo_clie === 'Masculino' ? '/img/man.png' : '/img/woman.png'" alt="bruce" class="w-100 rounded-circle shadow-sm">
 							</div>
 						</div>
 						<div class="col-sm-auto col-8 my-auto">

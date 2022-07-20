@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Atencion;
+use App\Models\Cita;
 use App\Models\Cliente;
 use App\Models\Examen;
 use App\Models\Hospitalizacion;
@@ -10,6 +11,7 @@ use App\Models\Mascota;
 use App\Models\Producto;
 use App\Models\Tratamiento;
 use App\Models\User;
+use App\Models\Vacuna;
 use App\Models\Venta;
 use Carbon\Carbon;
 use DB;
@@ -150,10 +152,30 @@ class TodosSeeder extends Seeder
         ]);
 
         Tratamiento::create([
-            'tiempo_tra' => '24 horas',
-            'dosis_tra' => 10,
-            'fecing_tra' => Carbon::createFromFormat('Y-m-d', '2022-05-04'),
-            'fecfin_tra' => Carbon::createFromFormat('Y-m-d', '2022-05-05'),
+            'id_masc' => 2,
+        ]);
+
+        DB::table('producto_tratamiento')->insert(array(
+            array(
+                'id_pro' => 1,
+                'id_tra' => 1,
+                'tiempo_tra' => '24 horas',
+                'dosis_tra' => 10,
+                'fecing_tra' => Carbon::createFromFormat('Y-m-d', '2022-05-04'),
+                'fecfin_tra' => Carbon::createFromFormat('Y-m-d', '2022-05-05'),
+            ),
+        ));
+
+        Cita::create([
+            'tipo_cita' => 'Peluqueria',
+            'id_masc' => 2,
+        ]);
+
+        Vacuna::create([
+            'nom_vac' => 'Antiparasitaria',
+            'dosis_vac' => 10,
+            'fecapl_vac'=> Carbon::createFromFormat('Y-m-d', '2022-06-04'),
+            'fecprox_vac' => Carbon::createFromFormat('Y-m-d', '2022-07-04'),
             'id_masc' => 2,
         ]);
     }

@@ -5,13 +5,72 @@
 				<div class="card mt-4">
 					<form role="form" @submit.prevent="submit" class="needs-validation">
 						<div class="card-header">
-							<h5 class="mb-0">Registrar Hospitalización</h5>
+							<h5 class="mb-0">Registrar Tratamiento</h5>
 						</div>
 						<div class="card-body pt-0">
 							<div class="row">
 								<div class="col-md-4">
 									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.id_masc }">
+									:class="{ 'is-invalid': mensaje }">
+										<label for="producto" class="ms-0">Producto</label>
+										<select v-model="id_pro" class="form-control" id="producto" @change="changeproducto">
+											<option value="">Seleccione un Producto</option>
+											<option :value="producto.id_pro" v-for="producto in productos" :key="producto.id_pro">{{ producto.nom_pro + " - " + producto.cantidad_pro + " " + "unidades" }}</option>
+										</select>
+										<div v-if="mensaje" class="invalid-feedback">{{ mensaje }}</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group input-group-static">
+										<label>Dosis</label>
+										<input type="number"
+										min="1"
+										class="form-control"
+										v-model="dosis"
+										placeholder="Dosis del Producto"
+										required>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group input-group-static">
+										<label>Tiempo</label>
+										<input type="text"
+										class="form-control"
+										v-model="tiempo"
+										placeholder="Tiempo de aplicación del Producto"
+										required>
+									</div>
+								</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-md-4">
+									<div class="input-group input-group-static"
+										:class="{ 'is-invalid': errors.fec_ini }">
+										<label>Fecha de Inicio</label>
+										<input type="date"
+											class="form-control"
+											:min="limitmin"
+											v-model="fec_ini"
+											placeholder="Fecha de Inicio">
+										<div v-if="errors.fec_ini" class="invalid-feedback">{{ errors.fec_ini }}</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group input-group-static"
+										:class="{ 'is-invalid': errors.fec_fin }">
+										<label>Fecha de Finalización</label>
+										<input type="date"
+											class="form-control"
+											:min="limitmin"
+											v-model="fec_fin"
+											placeholder="Fecha de Finalización">
+										<div v-if="errors.fec_fin" class="invalid-feedback">{{ errors.fec_fin }}</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group input-group-static"
+									:class="{ 'is-invalid': errors.id_masc }">
 										<label for="mascota" class="ms-0">Mascota</label>
 										<select v-model="form.id_masc" class="form-control" id="mascota">
 											<option value="">Seleccione una Mascota</option>
@@ -20,118 +79,69 @@
 										<div v-if="errors.id_masc" class="invalid-feedback">{{ errors.id_masc }}</div>
 									</div>
 								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.temp_corp }">
-										<label>Temperatura de la Mascota</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.temp_corp"
-											placeholder="Temperatura de la Mascota"
-											autofocus>
-										<div v-if="errors.temp_corp" class="invalid-feedback">{{ errors.temp_corp }}</div>
-									</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-lg-8 col-12 actions text-center mx-auto">
+									<button type="button" class="btn btn-outline-dark mb-0" @click="restablecer">
+										<i class="material-icons">refresh</i> Restablecer
+									</button>
+									<button type="button" class="btn bg-gradient-blue mb-0 ms-1" @click="agregar">
+										<i class="material-icons">add</i> Añadir
+									</button>
 								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.estado_hosp }">
-										<label>Salud de la Mascota</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.estado_hosp"
-											placeholder="Salud de la Mascota">
-										<div v-if="errors.estado_hosp" class="invalid-feedback">{{ errors.estado_hosp }}</div>
-									</div>
+								<div class="text-center mt-2 hide-msg" id="mensaje">
+									<label class="text-success m-0">
+										<i class="fas fa-check"></i> Producto añadido al tratamiento.
+									</label>
 								</div>
 							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.signologia }">
-										<label>Signos del Paciente</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.signologia"
-											placeholder="Signos del Paciente">
-										<div v-if="errors.signologia" class="invalid-feedback">{{ errors.signologia }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.color_mucosa }">
-										<label>Mucosa</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.color_mucosa"
-											placeholder="Color de la Mucosa">
-										<div v-if="errors.color_mucosa" class="invalid-feedback">{{ errors.color_mucosa }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.palpa_abdominal }">
-										<label>Palpa Abdominal</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.palpa_abdominal"
-											placeholder="Palpa abdominal de la Mascota">
-										<div v-if="errors.palpa_abdominal" class="invalid-feedback">{{ errors.palpa_abdominal }}</div>
-									</div>
-								</div>
-							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.piel }">
-										<label>Piel</label>
-										<input type="text"
-											class="form-control"
-											v-model="form.piel"
-											placeholder="Piel de la Mascota">
-										<div v-if="errors.piel" class="invalid-feedback">{{ errors.piel }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.frecue_cardia }">
-										<label>Frecuencia Cardiaca</label>
-										<input type="number"
-											class="form-control"
-											v-model="form.frecue_cardia"
-											placeholder="Frecuencia cardiaca de la Mascota">
-										<div v-if="errors.frecue_cardia" class="invalid-feedback">{{ errors.frecue_cardia }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.fecing_hosp }">
-										<label>Fecha de Ingreso</label>
-										<input type="date"
-											class="form-control"
-											v-model="form.fecing_hosp"
-											placeholder="Fecha de Ingreso">
-										<div v-if="errors.fecing_hosp" class="invalid-feedback">{{ errors.fecing_hosp }}</div>
-									</div>
+
+							<div class="row mt-2">
+								<div class="table-responsive">
+									<table class="table align-items-center mb-4" id="datatable">
+										<thead class="thead-light">
+											<tr>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Id</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre Producto</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dosis</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tiempo</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha de Inicio</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha de Finalización</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="producto in form.productos" :key="producto.id_pro">
+												<td class="text-sm font-weight-normal">{{ producto.id_pro }}</td>
+												<td class="text-sm font-weight-normal">{{ producto.nom_pro }}</td>
+												<td class="text-sm font-weight-normal">{{ producto.dosis }}</td>
+												<td class="text-sm font-weight-normal">{{ producto.tiempo }}</td>
+												<td class="text-sm font-weight-normal">{{ producto.fec_ini }}</td>
+												<td class="text-sm font-weight-normal">{{ producto.fec_fin }}</td>
+												<td class="text-sm">
+													<div class="d-flex justify-content-center align-items-center">
+														<button type="button" @click="eliminar(producto.id_pro)" class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
+															<i class="material-icons text-lg">clear</i>
+														</button>
+													</div>
+												</td>
+											</tr>
+											<tr v-if="form.productos.length == 0">
+												<td class="text-center py-3" colspan="100%">Aun no cuenta con productos para realizar el registro del tratamiento.</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
-							<div class="row mt-4">
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.fecfin_hosp }">
-										<label>Fecha de Salida</label>
-										<input type="date"
-											class="form-control"
-											v-model="form.fecfin_hosp"
-											placeholder="Fecha de Salida">
-										<div v-if="errors.fecfin_hosp" class="invalid-feedback">{{ errors.fecfin_hosp }}</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.descrip_hosp }">
-										<label>Observaciones</label>
-										<textarea class="form-control" v-model="form.descrip_hosp" placeholder="Observaciones de la Mascota" rows="3"></textarea>
-										<div v-if="errors.descrip_hosp" class="invalid-feedback">{{ errors.descrip_hosp }}</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div v-if="errors.productos" class="alert alert-warning alert-dismissible fade show mb-4 text-white" role="alert">
+										<span class="alert-icon me-2"><i class="fas fa-bell"></i></span>
+										<span class="alert-text"><strong>Mensaje:</strong> {{ errors.productos }}</span>
+										<button type="button" class="btn-close d-flex justify-content-center align-items-center" data-bs-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -140,7 +150,7 @@
 						<div class="card-footer">
 							<div class="row">
 								<div class="col-lg-8 col-12 actions text-end ms-auto">
-									<Link :href="route('atenciones.index')" class="btn btn-outline-dark mb-0">Cancelar</Link>
+									<Link :href="route('tratamientos.index')" class="btn btn-outline-dark mb-0">Cancelar</Link>
 									<button type="submit" class="btn bg-gradient-blue mb-0 ms-1" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Guardar</button>
 								</div>
 							</div>
@@ -154,6 +164,7 @@
 <script>
 import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
 
 export default {
 	components: {
@@ -163,37 +174,101 @@ export default {
 
 	props: {
 		mascotas: Object,
+		productos: Object,
 		errors: Object
 	},
 
 	data() {
 		return {
 			form: useForm({
-				fecing_hosp: null,
-				fecfin_hosp: null,
-				estado_hosp: '',
-				descrip_hosp: '',
-				signologia: '',
-				temp_corp: null,
-				color_mucosa: '',
-				palpa_abdominal: '',
-				piel: '',
-				frecue_cardia: '',
+				productos: [],
 				id_masc: '',
 			}),
+			id_pro: '',
+			producto_nuevo: null,
+			dosis: 1,
+			tiempo: 'Cada hora',
+			fec_ini: moment().format('YYYY-MM-DD'),
+			fec_fin: moment().format('YYYY-MM-DD'),
+			mensaje: '',
+			limitmin: null,
 		}
 	},
 
 	mounted(){
-		
+		this.limitmin = moment().format('YYYY-MM-DD');
 	},
 
 	methods: {
 		submit() {
-            this.form.post(route('hospitalizaciones.store'), {
+            this.form.post(route('tratamientos.store'), {
                 onSuccess: () => this.form.reset(),
             });
         },
+
+        changeproducto() {
+        	this.dosis = '';
+        	this.producto_nuevo = this.productos.find((producto_nuevo) => {
+        		return producto_nuevo.id_pro === this.id_pro;
+        	});
+
+        	if (this.producto_nuevo) {
+        		this.dosis = 1;
+        		this.tiempo = 'Cada hora';
+        		this.mensaje = '';
+        	} else {
+        		this.max = 1;
+        		this.mensaje = "Por favor seleccione un producto";
+        	}
+        },
+
+        agregar() {
+			let texto = document.getElementById('mensaje');
+        	if (this.producto_nuevo) {
+				let producto_guardado = this.form.productos.find((producto_guardado) => {
+					return producto_guardado.id_pro === this.producto_nuevo.id_pro;
+				});
+
+				if (!producto_guardado) {
+					Object.assign(this.producto_nuevo, {dosis: this.dosis});
+					Object.assign(this.producto_nuevo, {tiempo: this.tiempo});
+					Object.assign(this.producto_nuevo, {fec_ini: moment(this.fec_ini).format('DD/MM/YYYY')});
+					Object.assign(this.producto_nuevo, {fec_fin: moment(this.fec_fin).format('DD/MM/YYYY')});
+					this.form.productos.push(this.producto_nuevo);
+				} else{
+					this.form.productos.find((producto_guardado) => {
+						if (producto_guardado.id_pro === this.producto_nuevo.id_pro) {
+							producto_guardado.dosis = producto_guardado.dosis + this.dosis;
+						}
+					});
+				}
+				this.mensaje = '';
+				texto.classList.remove('hide-msg');
+        		texto.classList.add('show-msg');
+        	} else {
+        		this.mensaje = "Por favor seleccione un producto";
+        	}
+        	setTimeout(() => {
+        		texto.classList.remove('show-msg');
+        		texto.classList.add('hide-msg');
+        	}, 1000)
+        },
+
+        eliminar(id_pro) {
+        	for( var i = 0; i < this.form.productos.length; i++){
+        		if ( this.form.productos[i].id_pro === id_pro) {
+        			this.form.productos.splice(i, 1);
+        		}
+        	}
+        },
+
+        restablecer() {
+        	this.id_pro = '';
+			this.producto_nuevo = null;
+			this.dosis = 1;
+			this.tiempo = 'Cada hora';
+			this.mensaje = '';
+        }
 	}
 }
 </script>

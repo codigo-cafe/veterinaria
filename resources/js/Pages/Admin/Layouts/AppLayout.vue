@@ -7,10 +7,10 @@
 			<div class="container-fluid py-4" v-if="show">
 				<div class="row min-vh-80 h-100">
 					<div class="col-12">
-						<div v-if="$page.props.flash.status" class="alert alert-success alert-dismissible fade show mb-4 text-white" role="alert">
+						<div class="alert alert-success alert-dismissible fade show mb-4 text-white" :class="{'d-none': !$page.props.flash.status}" role="alert">
 							<span class="alert-icon me-2"><i class="fas fa-bell"></i></span>
 							<span class="alert-text"><strong>Mensaje:</strong> {{ $page.props.flash.status }}</span>
-							<button type="button" class="btn-close d-flex justify-content-center align-items-center" data-bs-dismiss="alert" aria-label="Close">
+							<button type="button" class="btn-close d-flex justify-content-center align-items-center" @click="close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
@@ -45,6 +45,12 @@ export default {
 
 	mounted(){
 		this.show = true;
+	},
+
+	methods: {
+		close() {
+			this.$page.props.flash.status = '';
+		}
 	}
 };
 </script>

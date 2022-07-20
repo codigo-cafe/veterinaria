@@ -78,54 +78,55 @@
                 <li class="nav-item">
                     <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('examenes.*') }" :href="route('examenes.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-briefcase-medical"></i>
+                            <i class="fas fa-heartbeat"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Examenes</span>
+                        <span class="nav-link-text ms-1">Exámenes</span>
                     </Link>
                 </li>
                 <li class="nav-item">
                     <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('tratamientos.*') }" :href="route('tratamientos.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-briefcase-medical"></i>
+                            <i class="fas fa-capsules"></i>
                         </div>
                         <span class="nav-link-text ms-1">Tratamientos</span>
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('historias.*') }" :href="route('historias.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <span class="nav-link-text ms-1">Historias</span>
-                    </a>
+                    </Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('citas.*') }" :href="route('citas.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-calendar"></i>
+                            <i class="fas fa-calendar-alt"></i>
                         </div>
                         <span class="nav-link-text ms-1">Citas Médicas</span>
-                    </a>
+                    </Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <Link class="nav-link text-white" :class="{ 'bg-blue active' : route().current('vacunas.*') }" :href="route('vacunas.index')">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-syringe"></i>
                         </div>
                         <span class="nav-link-text ms-1">Vacunación</span>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>
         <div class="sidenav-footer position-absolute w-100 bottom-0 ">
             <div class="mx-3">
-                <a class="btn btn-outline-white mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Configuraciones</a>
+                <Link class="btn btn-outline-white mt-4 w-100" :href="route('profile.show')" type="button">Configuraciones</Link>
             </div>
         </div>
     </aside>
 </template>
 <script>
 import { Link } from '@inertiajs/inertia-vue3';
+
 export default {
     components: {
         Link,
@@ -140,6 +141,9 @@ export default {
             ventas: false,
             atenciones: false,
             hospitalizaciones: false,
+            historias: false,
+            citas: false,
+            vacunas: false,
         }
     },
 
@@ -167,6 +171,21 @@ export default {
             break;
             case 'hospitalizaciones.index':
                 this.hospitalizaciones = true;
+            break;
+            case 'historias.index':
+                this.historias = true;
+            break;
+            case 'examenes.index':
+                this.examenes = true;
+            break;
+            case 'tratamientos.index':
+                this.tratamientos = true;
+            break;
+            case 'citas.index':
+                this.citas = true;
+            break;
+            case 'vacunas.index':
+                this.vacunas = true;
             break;
         }
 

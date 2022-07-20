@@ -4,7 +4,7 @@
 			<div class="card">
 				<div class="card-header px-3 pb-0 pt-2">
 					<div class="icon icon-lg icon-shape bg-gradient-blue shadow-blue text-center border-radius-xl mt-n4">
-						<i class="fas fa-address-card"></i>
+						<i class="fas fa-heartbeat"></i>
 					</div>
 				</div>
 				<div class="card-body">
@@ -40,8 +40,13 @@
 								<tr>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
 										<a href="#" @click="sort('id_exa')" class="w-100 d-inline-flex justify-content-between text-secondary">#</a>
-										<i v-if="params.field ==='id_exa' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
-										<i v-if="params.field ==='id_exa' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
+										<i v-if="params.field === 'id_exa' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
+										<i v-if="params.field === 'id_exa' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
+									</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+										<a href="#" @click="sort('titu_exa')" class="w-100 d-inline-flex justify-content-between text-secondary">Examen</a>
+										<i v-if="params.field === 'titu_exa' && params.direction === 'asc'" class="fas fa-sort-down fa-lg"></i>
+										<i v-if="params.field === 'titu_exa' && params.direction === 'desc'" class="fas fa-sort-up fa-lg"></i>
 									</th>
 									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
 										<a href="#" @click="sort('nom_masc')" class="w-100 d-inline-flex justify-content-between text-secondary">Nombre</a>
@@ -79,6 +84,7 @@
 							<tbody>
 								<tr v-for="examen in examenes.data" :key="examen.id_exa">
 									<td class="text-sm font-weight-normal">{{ examen.id_exa }}</td>
+									<td class="text-sm font-weight-normal">{{ examen.titu_exa }}</td>
 									<td class="text-sm font-weight-normal">{{ examen.mascota.nom_masc }}</td>
 									<td class="text-sm font-weight-normal">{{ examen.mascota.raza_masc }}</td>
 									<td class="text-sm font-weight-normal">{{ examen.mascota.sexo_masc }}</td>

@@ -33,7 +33,7 @@ class VentaRequest extends FormRequest
     public function messages($value='')
     {
         return [
-            'productos.required' => 'Se requiere que haya agregado al menos un producto a su lista de compras',
+            'productos.required' => 'Se requiere que haya agregado al menos un producto a su lista de compras.',
             'id_clie.required' => 'El campo cliente es obligatorio.',
         ];
     }

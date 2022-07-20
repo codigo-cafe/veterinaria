@@ -4,7 +4,7 @@
 			<div class="card">
 				<div class="card-header px-3 pb-0 pt-2">
 					<div class="icon icon-lg icon-shape bg-gradient-blue shadow-blue text-center border-radius-xl mt-n4">
-						<i class="fas fa-address-card"></i>
+						<i class="fas fa-cart-plus"></i>
 					</div>
 				</div>
 				<div class="card-body">
@@ -74,7 +74,7 @@
 									<td class="text-sm font-weight-normal">{{ venta.cliente.nom_clie }}</td>
 									<td class="text-sm font-weight-normal">{{ venta.cliente.ape_clie }}</td>
 									<td class="text-sm font-weight-normal">{{ venta.total_ven }}</td>
-									<td class="text-sm font-weight-normal">{{ venta.fec_ven }}</td>
+									<td class="text-sm font-weight-normal">{{ fecha(venta.fec_ven) }}</td>
 									<td class="text-sm">
 										<div class="d-flex justify-content-center align-items-center">
 											<Link :href="route('ventas.show', venta.id_ven)" class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-md d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-original-title="Mostrar">
@@ -110,6 +110,7 @@ import AppLayout from '@/Pages/Admin/Layouts/AppLayout';
 import { Link } from '@inertiajs/inertia-vue3';
 import Pagination from '@/Pages/Admin/Partials/Pagination';
 import Confirm from '@/Pages/Admin/Partials/Confirm';
+import moment from 'moment';
 
 export default {
 	components: {
@@ -135,7 +136,7 @@ export default {
 			infomodal: {
 				id: null,
 				nombre: null,
-				mensaje: "Seguro de eliminar la venta: ",
+				mensaje: "Seguro de eliminar la venta realizada al cliente: ",
 				url: "ventas.destroy",
 			},
 		}
@@ -162,9 +163,17 @@ export default {
 
 		destroy(venta){
 			this.infomodal.id = venta.id_ven;
-			this.infomodal.nombre = venta.id_ven;
+			this.infomodal.nombre = venta.cliente.nom_clie + " " + venta.cliente.ape_clie;
 			var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
 			confirmModal.show()
+		},
+
+		fecha: function (date) {
+			if (date) {
+				return moment(date).format('DD/MM/YYYY');
+			} else {
+				return '';
+			}
 		},
 
 		focusripples() {

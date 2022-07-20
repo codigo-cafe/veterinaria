@@ -22,7 +22,7 @@ class Venta extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Producto::class, 'producto_venta');
+        return $this->belongsToMany(Producto::class, 'producto_venta', 'id_ven', 'id_pro')->withPivot('cant_ven', 'precio_pro');
     }
 
     public function cliente()
