@@ -47,13 +47,13 @@
 							<div class="row mt-4 py-4 bg-light">
 								<div class="col-md-4">
 									<div class="input-group input-group-static"
-										:class="{ 'is-invalid': errors.correo_per }">
+										:class="{ 'is-invalid': errors.email }">
 										<label>Correo</label>
 										<input type="email"
 											class="form-control"
-											v-model="form.correo_per"
+											v-model="form.email"
 											placeholder="Correo Electrónico">
-										<div v-if="errors.correo_per" class="invalid-feedback">{{ errors.correo_per }}</div>
+										<div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -226,7 +226,7 @@ export default {
 				cedula_per: '',
 				nom_per: '',
 				ape_per: '',
-				correo_per: '',
+				email: '',
 				contrasena_per: '',
 				contrasena_per_confirmation: '',
 				dir_per: '',

@@ -115,12 +115,15 @@
                         <span class="nav-link-text ms-1">Vacunación</span>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link class="nav-link text-white btn btn-outline-white text-capitalize" :class="{ 'bg-blue active' : route().current('profile.show') }" :href="route('profile.show')">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-syringe"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Configuraciones</span>
+                    </Link>
+                </li>
             </ul>
-        </div>
-        <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-            <div class="mx-3">
-                <Link class="btn btn-outline-white mt-4 w-100" :href="route('profile.show')" type="button">Configuraciones</Link>
-            </div>
         </div>
     </aside>
 </template>

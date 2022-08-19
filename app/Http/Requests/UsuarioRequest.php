@@ -38,10 +38,10 @@ class UsuarioRequest extends FormRequest
         ];
         if ($this->method() === 'PUT') {
             $rules['cedula_per'] = 'required|max:15|unique:personal,cedula_per,' . $this->route('usuario')->id;
-            $rules['correo_per'] = 'required|unique:personal,correo_per,' . $this->route('usuario')->id;
+            $rules['email'] = 'required|unique:personal,email,' . $this->route('usuario')->id;
         } else if($this->method() === 'POST'){
             $rules['cedula_per'] = 'required|max:15|unique:personal,cedula_per';
-            $rules['correo_per'] = 'required|unique:personal,correo_per';
+            $rules['email'] = 'required|unique:personal,email';
             $rules['contrasena_per'] = 'required|confirmed|min:6';
         }
         return $rules;

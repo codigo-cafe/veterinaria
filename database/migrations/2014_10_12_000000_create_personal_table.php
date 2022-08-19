@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('ape_per', 50);
             $table->text('dir_per', 50);
             $table->string('celular_per', 20);
-            $table->string('correo_per')->unique();
+            $table->string('email')->unique();
             $table->string('contrasena_per');
             $table->string('sexo_per', 50);
             $table->integer('edad_per');

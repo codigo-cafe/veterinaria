@@ -32,10 +32,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'cargo_per' => ['required', 'string', 'max:50'],
             'profe_per' => ['required', 'string', 'max:50'],
             'cedula_per' => ['required', 'string', 'max:15', Rule::unique('personal')->ignore($user->id)],
-            'correo_per' => ['required', 'email', 'max:255', Rule::unique('personal')->ignore($user->id)],
+            'email' => ['required', 'email', 'max:255', Rule::unique('personal')->ignore($user->id)],
         ])->validateWithBag('updateProfileInformation');
 
-        if ($input['correo_per'] !== $user->correo_per &&
+        if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
@@ -52,7 +52,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'cargo_per' => $input['cargo_per'],
                 'profe_per' => $input['profe_per'],
                 'cedula_per' => $input['cedula_per'],
-                'correo_per' => $input['correo_per'],
+                'email' => $input['email'],
             ])->save();
             return redirect('atenciones.index')->with('status', 'Profile updated!');
         }

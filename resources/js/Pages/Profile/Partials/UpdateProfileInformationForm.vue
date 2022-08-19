@@ -44,13 +44,13 @@
                 <div class="row mt-4">
                     <div class="col-md-4">
                         <div class="input-group input-group-static"
-                            :class="{ 'is-invalid': errors.correo_per }">
+                            :class="{ 'is-invalid': errors.email }">
                             <label>Correo</label>
                             <input type="email"
                                 class="form-control"
-                                v-model="form.correo_per"
+                                v-model="form.email"
                                 placeholder="Correo Electrónico">
-                            <div v-if="errors.correo_per" class="invalid-feedback">{{ errors.correo_per }}</div>
+                            <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -195,7 +195,7 @@ export default {
                 ape_per: this.usuario.ape_per,
                 dir_per: this.usuario.dir_per,
                 celular_per: this.usuario.celular_per,
-                correo_per: this.usuario.correo_per,
+                email: this.usuario.email,
                 cargo_per: this.usuario.cargo_per,
                 profe_per: this.usuario.profe_per,
                 fecnac_per: this.usuario.fecnac_per,
